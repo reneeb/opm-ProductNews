@@ -11,17 +11,17 @@
     
     
     <Filelist>
-        <File Permission="644"Location="Kernel/Config/Files/ProductNews.xml" />
-        <File Permission="644"Location="Kernel/Language/de_ProductNews.pm" />
-        <File Permission="644"Location="Kernel/Modules/AdminProductNews.pm" />
-        <File Permission="644"Location="Kernel/Modules/AgentProductNews.pm" />
-        <File Permission="644"Location="Kernel/Output/HTML/DashboardProductNews.pm" />
-        <File Permission="644"Location="Kernel/Output/HTML/Standard/AdminProductNewsList.dtl" />
-        <File Permission="644"Location="Kernel/Output/HTML/Standard/AdminProductNewsForm.dtl" />
-        <File Permission="644"Location="Kernel/Output/HTML/Standard/AgentProductNews.dtl" />
-        <File Permission="644"Location="Kernel/Output/HTML/Standard/DashboardProductNews.dtl" />
-        <File Permission="644"Location="Kernel/System/ProductNews.pm" />
-        <File Permission="644"Location="doc/en/ProductNews.pod" />
+        <File Permission="644" Location="Kernel/Config/Files/ProductNews.xml" />
+        <File Permission="644" Location="Kernel/Language/de_ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Modules/AdminProductNews.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentProductNews.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/DashboardProductNews.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsList.dtl" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsForm.dtl" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentProductNews.dtl" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DashboardProductNews.dtl" />
+        <File Permission="644" Location="Kernel/System/ProductNews.pm" />
+        <File Permission="644" Location="doc/en/ProductNews.pod" />
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="product_news">
