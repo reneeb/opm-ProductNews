@@ -13,6 +13,7 @@ package Kernel::Language::de_ProductNews;
 
 use strict;
 use warnings;
+use utf8;
 
 use vars qw($VERSION);
 $VERSION = qw($Revision: 1.1.1.1 $) [1];
@@ -26,10 +27,10 @@ sub Data {
 
     $Lang->{'Add news'}        = 'Neue Nachricht';
     $Lang->{'News ID'}         = 'Nachricht';
-    $Lang->{'Headline'}        = 'Überschrift';
+    $Lang->{'Headline'}        = 'Ãœberschrift';
     $Lang->{'Teaser'}          = 'Kurztext';
     $Lang->{'Author'}          = 'Autor';
-    $Lang->{'Add/Change News'} = 'Nachricht hinzufügen/ändern';
+    $Lang->{'Add/Change News'} = 'Nachricht hinzufÃ¼gen/Ã¤ndern';
     $Lang->{'News Management'} = 'Nachrichten verwalten';
     $Lang->{'edit'}            = 'bearbeiten';
 
