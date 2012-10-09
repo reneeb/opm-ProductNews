@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_package version="1.1">
+    <Name>ProductNews</Name>
+    <Version>0.0.1</Version>
+    <Vendor>Perl-Services.de</Vendor>
+    <URL>http://perl-services.de.de/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
+    <Description Lang="en">A module that adds own product news to OTRS.</Description>
+    <Description Lang="de">Ein Modul, mit dem eigene Produktneuigkeiten in OTRS gepflegt werden können.</Description>
+    <Framework>3.0.x</Framework>
+    
+    
+    <Filelist>
+        <File Location="Kernel/Config/Files/ProductNews.xml" Permission="644"/>
+        <File Location="Kernel/Language/de_ProductNews.pm" Permission="644"/>
+        <File Location="Kernel/Modules/AdminProductNews.pm" Permission="644"/>
+        <File Location="Kernel/Modules/AgentProductNews.pm" Permission="644"/>
+        <File Location="Kernel/Output/HTML/DashboardProductNews.pm" Permission="644"/>
+        <File Location="Kernel/Output/HTML/Standard/AdminProductNewsList.dtl" Permission="644"/>
+        <File Location="Kernel/Output/HTML/Standard/AdminProductNewsForm.dtl" Permission="644"/>
+        <File Location="Kernel/Output/HTML/Standard/AgentProductNews.dtl" Permission="644"/>
+        <File Location="Kernel/Output/HTML/Standard/DashboardProductNews.dtl" Permission="644"/>
+        <File Location="Kernel/System/ProductNews.pm" Permission="644"/>
+        <File Location="doc/en/ProductNews.pod" Permission="644"/>
+    </Filelist>
+    <DatabaseInstall Type="post">
+        <TableCreate Type="post" Name="product_news">
+            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"/>
+            <Column Name="headline" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="teaser" Required="true" Size="250" Type="VARCHAR"/>
+            <Column Name="body" Required="true" Size="3000" Type="VARCHAR"/>
+            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
+            <Column Name="create_time" Required="true" Type="DATE"/>
+            <Column Name="create_by" Required="true" Type="INTEGER"/>
+            <Column Name="change_time" Required="true" Type="DATE"/>
+            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <ForeignKey ForeignTable="system_user">
+                <Reference Foreign="id" Local="create_by">
+                </Reference>
+                <Reference Foreign="id" Local="change_by">
+                </Reference>
+            </ForeignKey>
+            <ForeignKey ForeignTable="valid">
+                <Reference Foreign="id" Local="valid_id">
+                </Reference>
+            </ForeignKey>
+        </TableCreate>
+    </DatabaseInstall>
+    <DatabaseUninstall Type="post">
+        <TableDrop Type="post" Name="product_news">
+        </TableDrop>
+    </DatabaseUninstall>
+</otrs_package>

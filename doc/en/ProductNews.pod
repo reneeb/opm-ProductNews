@@ -1,0 +1,21 @@
+=head1 NAME
+
+ProductNews - Show news about the product on the Dashboard
+
+=head1 DESCRIPTION
+
+If you have news about your product or any other message that all agents of your
+OTRS system should know about, you can use ProductNews to handle this.
+
+With this extension a new dashboard widget is created and administrators can add
+news.
+
+=head1 PREREQUESITS
+
+OTRS 3.0.x
+
+=head1 AUTHOR AND LICENSE
+
+Renee Baecker
+
+This software comes with ABSOLUTELY NO WARRANTY. For details, see the enclosed file COPYING for license information (AGPL). If you did not receive this file, see http://www.gnu.org/licenses/agpl.txt.

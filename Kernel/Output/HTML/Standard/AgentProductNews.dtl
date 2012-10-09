@@ -1,0 +1,34 @@
+# --
+# AgentProductNews.dtl - provides HTML form for AgentProductNews
+# Copyright (C) 2011 Perl-Services.de, http://perl-services.de/
+# --
+# $Id: AgentProductNews.dtl,v 1.1.1.1 2011/04/15 07:49:58 rb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="MainBox ARIARoleMain">
+    <div class="ClearLeft"></div>
+    <div class="Headline">
+        <h1 title="$QData{"Headline"}">$QData{"Headline"}</h1>
+        <div class="AdditionalInformation">
+            $QData{"CreateTime"} - $QData{"Author"}
+        </div>
+    </div>
+
+    <div class="ContentColumn">
+        <div class="ActionRow">
+            <p>
+                <h3>$QData{"Teaser"}</h3>
+            </p>
+        </div>
+
+        <p>
+            $Data{"Body"}
+        </p>
+
+    </div>
+    <div class="Clear"></div>
+</div>

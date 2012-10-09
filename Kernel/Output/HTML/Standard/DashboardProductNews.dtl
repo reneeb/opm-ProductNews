@@ -1,0 +1,22 @@
+# --
+# AgentDashboardProductNews.dtl - provides HTML for global dashboard
+# Copyright (C) 2011 Perl-Services.de, http://perl-services.de/
+# --
+# $Id: DashboardProductNews.dtl,v 1.1.1.1 2011/04/15 07:49:58 rb Exp $
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<table class="DataTable">
+    <tbody>
+<!-- dtl:block:News -->
+        <tr>
+            <td>
+                <a href="$Env{"Baselink"}Action=AgentProductNews;NewsID=$LQData{"NewsID"}" target="_blank">$Text{"$Data{"Headline"}","100"}</a>
+            </td>
+        </tr>
+<!-- dtl:block:News -->
+    </tbody>
+</table>
