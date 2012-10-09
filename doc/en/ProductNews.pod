@@ -10,12 +10,11 @@ OTRS system should know about, you can use ProductNews to handle this.
 With this extension a new dashboard widget is created and administrators can add
 news.
 
-=head1 PREREQUESITS
-
-OTRS 3.0.x
-
 =head1 AUTHOR AND LICENSE
 
-Renee Baecker
+Renee Baecker, L<http://perl-services.de>
 
-This software comes with ABSOLUTELY NO WARRANTY. For details, see the enclosed file COPYING for license information (AGPL). If you did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+This software comes with ABSOLUTELY NO WARRANTY. 
+For details, see the enclosed file COPYING for 
+license information (AGPL). If you did not receive 
+this file, see L<http://www.gnu.org/licenses/agpl.txt>.
