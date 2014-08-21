@@ -18,9 +18,7 @@
 
     <div class="ContentColumn">
         <div class="ActionRow">
-            <p>
-                <h3>$QData{"Teaser"}</h3>
-            </p>
+            <h3>$QData{"Teaser"}</h3>
         </div>
 
         <p>
