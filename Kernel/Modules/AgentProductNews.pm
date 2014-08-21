@@ -51,19 +51,32 @@ sub Run {
 
     $News{Body} = $Self->{UtilsObject}->ToHTML( String => $News{Body} );
 
+    my %Opts;
+    my $NavigationBar = $Self->{LayoutObject}->NavigationBar();
+    if( $GetParam{Mode} eq 'ContentOnly') {
+        $Opts{Type}    = 'Small';
+        $NavigationBar = '';
+       
+        # for very short news, the dialog will show garbage, so
+        # we have to extend the content...
+        my $Whitespaces = 0; 
+        while ( length $News{Body} < 120 ) {
+            $News{Body} .= ' ';
+            $Whitespaces++;
+        }
+
+        $News{Body} .= '&nbsp;' x $Whitespaces;
+    }
+
     my $Content = $Self->{LayoutObject}->Output(
         TemplateFile => 'AgentProductNews',
         Data         => \%News,
     );
 
-    if( $GetParam{Mode} eq 'ContentOnly') {
-        return $Content;
-    }
-
-    my $Output = $Self->{LayoutObject}->Header();
-    $Output .= $Self->{LayoutObject}->NavigationBar();
+    my $Output = $Self->{LayoutObject}->Header( %Opts );
+    $Output .= $NavigationBar;
     $Output .= $Content;
-    $Output .= $Self->{LayoutObject}->Footer();
+    $Output .= $Self->{LayoutObject}->Footer( %Opts );
     return $Output;
 }
 
