@@ -10,6 +10,13 @@ OTRS system should know about, you can use ProductNews to handle this.
 With this extension a new dashboard widget is created and administrators can add
 news.
 
+=head1 CONTRIBUTORS
+
+Torsten Thau, c.a.p.e IT (L<http://cape-it.de>)
+
+ * Made it ready for OTRS 3.3
+ * Inlineediting
+
 =head1 AUTHOR AND LICENSE
 
 Renee Baecker, L<http://perl-services.de>

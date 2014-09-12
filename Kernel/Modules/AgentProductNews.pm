@@ -40,15 +40,14 @@ sub new {
 
 sub Run {
     my ( $Self, %Param ) = @_;
-
-    my @Params = (qw(NewsID));
+    my @Params = (qw(NewsID ID Mode));
 
     my %GetParam;
     for (@Params) {
         $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) || '';
     }
 
-    my %News = $Self->{NewsObject}->NewsGet( NewsID => $GetParam{NewsID} );
+    my %News = $Self->{NewsObject}->NewsGet( NewsID => $GetParam{ID} || $GetParam{NewsID});
 
     $News{Body} = $Self->{UtilsObject}->ToHTML( String => $News{Body} );
 
@@ -56,6 +55,10 @@ sub Run {
         TemplateFile => 'AgentProductNews',
         Data         => \%News,
     );
+
+    if( $GetParam{Mode} eq 'ContentOnly') {
+        return $Content;
+    }
 
     my $Output = $Self->{LayoutObject}->Header();
     $Output .= $Self->{LayoutObject}->NavigationBar();

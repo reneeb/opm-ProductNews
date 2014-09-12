@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.1">
     <Name>ProductNews</Name>
-    <Version>3.1.1</Version>
+    <Version>3.3.1</Version>
     <Vendor>Perl-Services.de</Vendor>
     <URL>http://perl-services.de.de/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A module that adds own product news to OTRS.</Description>
     <Description Lang="de">Ein Modul, mit dem eigene Produktneuigkeiten in OTRS gepflegt werden können.</Description>
-    <Framework>3.0.x</Framework>
-    <Framework>3.1.x</Framework>
+    <Framework>3.3.x</Framework>
     
     
     <Filelist>
@@ -23,6 +22,7 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DashboardProductNews.dtl" />
         <File Permission="644" Location="Kernel/System/ProductNews.pm" />
         <File Permission="644" Location="doc/en/ProductNews.pod" />
+        <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="product_news">
@@ -35,7 +35,7 @@
             <Column Name="create_by" Required="true" Type="INTEGER"/>
             <Column Name="change_time" Required="true" Type="DATE"/>
             <Column Name="change_by" Required="true" Type="INTEGER"/>
-            <ForeignKey ForeignTable="system_user">
+            <ForeignKey ForeignTable="users">
                 <Reference Foreign="id" Local="create_by">
                 </Reference>
                 <Reference Foreign="id" Local="change_by">
