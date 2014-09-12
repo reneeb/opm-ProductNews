@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    <CVS>$Id: ProductNews.xml,v 1.1.1.1 2011/04/15 07:49:58 rb Exp $</CVS>
     <ConfigItem Name="Frontend::Module###AgentProductNews" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the  agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>

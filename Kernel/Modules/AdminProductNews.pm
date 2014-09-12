@@ -1,8 +1,6 @@
 # --
 # Kernel/Modules/AdminProductNews.pm - provides admin notification translations
-# Copyright (C) 2011 Perl-Services.de, http://perl-services.de/
-# --
-# $Id: AdminProductNews.pm,v 1.1.1.1 2011/04/15 07:49:58 rb Exp $
+# Copyright (C) 2011-2014 Perl-Services.de, http://perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -18,8 +16,7 @@ use Kernel::System::ProductNews;
 use Kernel::System::HTMLUtils;
 use Kernel::System::Valid;
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1.1.1 $) [1];
+our $VERSION = 0.02;
 
 sub new {
     my ( $Type, %Param ) = @_;

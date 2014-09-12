@@ -1,8 +1,6 @@
 # --
 # Kernel/Language/de_ProductNews.pm - the german translation of ProductNews
-# Copyright (C) 2011 Perl-Services.de, http://perl-services.de/
-# --
-# $Id: de_ProductNews.pm,v 1.1.1.1 2011/04/15 07:49:58 rb Exp $
+# Copyright (C) 2011-2014 Perl-Services.de, http://perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -14,8 +12,7 @@ package Kernel::Language::de_ProductNews;
 use strict;
 use warnings;
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1.1.1 $) [1];
+our $VERSION = 0.02;
 
 sub Data {
     my $Self = shift;

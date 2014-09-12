@@ -1,8 +1,6 @@
 # --
 # Kernel/System/ProductNews.pm - All News related functions should be here eventually
-# Copyright (C) 2011 Perl-Services.de, http://perl-services.de/
-# --
-# $Id: ProductNews.pm,v 1.1.1.1 2011/04/15 07:49:58 rb Exp $
+# Copyright (C) 2011-2014 Perl-Services.de, http://perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -17,8 +15,7 @@ use warnings;
 use Kernel::System::User;
 use Kernel::System::Valid;
 
-use vars qw($VERSION);
-$VERSION = qw($Revision: 1.1.1.1 $) [1];
+our $VERSION = 0.02;
 
 =head1 NAME
 
@@ -338,11 +335,5 @@ sub NewsList {
 This software comes with ABSOLUTELY NO WARRANTY. For details, see
 the enclosed file COPYING for license information (AGPL). If you
 did not receive this file, see L<http://www.gnu.org/licenses/agpl.txt>.
-
-=cut
-
-=head1 VERSION
-
-$Revision: 1.1.1.1 $ $Date: 2011/04/15 07:49:58 $
 
 =cut
