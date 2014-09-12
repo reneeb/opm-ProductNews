@@ -43,7 +43,7 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my @Params = (qw(NewsID Headline Teaser Body ValidID UserID RedirectAction));
+    my @Params = (qw(NewsID Headline Teaser Body ValidID UserID));
     my %GetParam;
     for (@Params) {
         $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) || '';
@@ -171,12 +171,7 @@ sub Run {
 
     elsif ( $Self->{Subaction} eq 'Delete' ) {
         $Self->{NewsObject}->NewsDelete( %GetParam );
-        if( !$GetParam{RedirectAction} ) {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=AdminProductNews" );
-        }
-        else {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=".$GetParam{RedirectAction} );
-        }
+        return $Self->{LayoutObject}->Redirect( OP => "Action=AdminProductNews" );
     }
 
     # ------------------------------------------------------------ #

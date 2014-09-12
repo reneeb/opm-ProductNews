@@ -12,32 +12,8 @@
 <!-- dtl:block:News -->
         <tr>
             <td>
-                <a href="#" onclick="Core.UI.Dialog.DynamicContentDialog('AgentProductNews', $LQData{"NewsID"}, 'ContentOnly', '$Text{"News Item"}');" title="$Text{"$Data{"Teaser"}"}" >
-                $Text{"$Data{"Headline"}","100"}
-                </a>
+                <a href="$Env{"Baselink"}Action=AgentProductNews;NewsID=$LQData{"NewsID"}" target="_blank">$Text{"$Data{"Headline"}","100"}</a>
             </td>
-<!-- dtl:block:Teaser -->
-            <td>
-                <a href="#" onclick="Core.UI.Dialog.DynamicContentDialog('AgentProductNews', $LQData{"NewsID"}, 'ContentOnly', '$Text{"News Item"}');">
-                $Data{"Teaser"}
-                </a>
-            </td>
-<!-- dtl:block:Teaser -->
-<!-- dtl:block:CreateByInformation -->
-            <td>
-                $Text{"created by"}: $Data{"UserLastname"} $Data{"UserFirstname"} ($Data{"UserLogin"})
-            </td>
-<!-- dtl:block:CreateByInformation -->
-<!-- dtl:block:EditDelete -->
-            <td>
-                <a href="$Env{"Baselink"}Action=AdminProductNews;Subaction=Edit;NewsID=$LQData{"NewsID"}">
-                $Text{"edit"}
-                </a> |
-                <a href="$Env{"Baselink"}Action=AdminProductNews;Subaction=Delete;NewsID=$LQData{"NewsID"};RedirectAction=AgentDashboard;">
-                $Text{"delete"}
-                </a>
-            </td>
-<!-- dtl:block:EditDelete -->
         </tr>
 <!-- dtl:block:News -->
     </tbody>
