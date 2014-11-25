@@ -12,11 +12,14 @@ package Kernel::Modules::AdminProductNews;
 use strict;
 use warnings;
 
-use Kernel::System::ProductNews;
-use Kernel::System::HTMLUtils;
-use Kernel::System::Valid;
+our @ObjectDependencies = qw(
+    Kernel::System::ProductNews
+    Kernel::System::HTMLUtils
+    Kernel::System::Valid
+    Kernel::System::Web::Request
+);
 
-our $VERSION = 0.02;
+our $VERSION = 0.03;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -25,28 +28,21 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check all needed objects
-    for my $Needed (qw(ParamObject DBObject LayoutObject ConfigObject LogObject)) {
-        if ( !$Self->{$Needed} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{NewsObject}      = Kernel::System::ProductNews->new(%Param);
-    $Self->{ValidObject}     = Kernel::System::Valid->new(%Param);
-    $Self->{HTMLUtilsObject} = Kernel::System::HTMLUtils->new(%Param);
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
+    my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
+
     my @Params = (qw(NewsID Headline Teaser Body ValidID UserID RedirectAction));
     my %GetParam;
     for (@Params) {
-        $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) || '';
+        $GetParam{$_} = $ParamObject->GetParam( Param => $_ ) || '';
     }
 
     # ------------------------------------------------------------ #
@@ -58,14 +54,14 @@ sub Run {
             Add  => 'Save',
         );
 
-        my $Output       = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
         $Output .= $Self->_MaskNewsForm(
             %GetParam,
             %Param,
             Subaction => $Subaction{ $Self->{Subaction} },
         );
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
         return $Output;
     }
 
@@ -81,7 +77,7 @@ sub Run {
         my %Errors;
         if (
             !$GetParam{ValidID} ||
-            !$Self->{ValidObject}->ValidLookup( ValidID => $GetParam{ValidID} )
+            !$ValidObject->ValidLookup( ValidID => $GetParam{ValidID} )
             )
         {
             $Errors{ValidIDInvalid} = 'ServerError';
@@ -96,27 +92,28 @@ sub Run {
         if ( %Errors ) {
             $Self->{Subaction} = 'Edit';
 
-            my $Output = $Self->{LayoutObject}->Header();
-            $Output .= $Self->{LayoutObject}->NavigationBar();
+            my $Output = $LayoutObject->Header();
+            $Output .= $LayoutObject->NavigationBar();
             $Output .= $Self->_MaskNewsForm(
                 %GetParam,
                 %Param,
                 %Errors,
                 Subaction => 'Update',
             );
-            $Output .= $Self->{LayoutObject}->Footer();
+            $Output .= $LayoutObject->Footer();
             return $Output;
         }
 
-        my $Update = $Self->{NewsObject}->NewsUpdate(
+        my $Update = $NewsObject->NewsUpdate(
             %GetParam,
             UserID => $Self->{UserID},
         );
 
         if ( !$Update ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
-        return $Self->{LayoutObject}->Redirect( OP => "Action=AdminProductNews" );
+
+        return $LayoutObject->Redirect( OP => "Action=AdminProductNews" );
     }
 
     # ------------------------------------------------------------ #
@@ -125,13 +122,13 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'Save' ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
 
         # server side validation
         my %Errors;
         if (
             !$GetParam{ValidID} ||
-            !$Self->{ValidObject}->ValidLookup( ValidID => $GetParam{ValidID} )
+            !$ValidObject->ValidLookup( ValidID => $GetParam{ValidID} )
             )
         {
             $Errors{ValidIDInvalid} = 'ServerError';
@@ -146,36 +143,38 @@ sub Run {
         if ( %Errors ) {
             $Self->{Subaction} = 'Add';
 
-            my $Output = $Self->{LayoutObject}->Header();
-            $Output .= $Self->{LayoutObject}->NavigationBar();
+            my $Output = $LayoutObject->Header();
+            $Output .= $LayoutObject->NavigationBar();
             $Output .= $Self->_MaskNewsForm(
                 %GetParam,
                 %Param,
                 %Errors,
                 Subaction => 'Save',
             );
-            $Output .= $Self->{LayoutObject}->Footer();
+            $Output .= $LayoutObject->Footer();
             return $Output;
         }
 
-        my $Success = $Self->{NewsObject}->NewsAdd(
+        my $Success = $NewsObject->NewsAdd(
             %GetParam,
             UserID => $Self->{UserID},
         );
 
         if ( !$Success ) {
-            return $Self->{LayoutObject}->ErrorScreen();
+            return $LayoutObject->ErrorScreen();
         }
-        return $Self->{LayoutObject}->Redirect( OP => "Action=AdminProductNews" );
+
+        return $LayoutObject->Redirect( OP => "Action=AdminProductNews" );
     }
 
     elsif ( $Self->{Subaction} eq 'Delete' ) {
-        $Self->{NewsObject}->NewsDelete( %GetParam );
+        $NewsObject->NewsDelete( %GetParam );
+
         if( !$GetParam{RedirectAction} ) {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=AdminProductNews" );
+            return $LayoutObject->Redirect( OP => "Action=AdminProductNews" );
         }
         else {
-            return $Self->{LayoutObject}->Redirect( OP => "Action=".$GetParam{RedirectAction} );
+            return $LayoutObject->Redirect( OP => "Action=".$GetParam{RedirectAction} );
         }
     }
 
@@ -183,10 +182,10 @@ sub Run {
     # else ! print form
     # ------------------------------------------------------------ #
     else {
-        my $Output = $Self->{LayoutObject}->Header();
-        $Output .= $Self->{LayoutObject}->NavigationBar();
+        my $Output = $LayoutObject->Header();
+        $Output .= $LayoutObject->NavigationBar();
         $Output .= $Self->_MaskNewsForm();
-        $Output .= $Self->{LayoutObject}->Footer();
+        $Output .= $LayoutObject->Footer();
         return $Output;
     }
 }
@@ -194,15 +193,20 @@ sub Run {
 sub _MaskNewsForm {
     my ( $Self, %Param ) = @_;
 
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
+    my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
+
     if ( $Self->{Subaction} eq 'Edit' ) {
-        my %News = $Self->{NewsObject}->NewsGet( NewsID => $Param{NewsID} );
+        my %News = $NewsObject->NewsGet( NewsID => $Param{NewsID} );
         $Param{$_} = $News{$_} for keys %News;
     }
 
-    my $ValidID = $Self->{ValidObject}->ValidLookup( Valid => 'valid' );
+    my $ValidID = $ValidObject->ValidLookup( Valid => 'valid' );
 
-    $Param{ValidSelect} = $Self->{LayoutObject}->BuildSelection(
-        Data       => { $Self->{ValidObject}->ValidList() },
+    $Param{ValidSelect} = $LayoutObject->BuildSelection(
+        Data       => { $ValidObject->ValidList() },
         Name       => 'ValidID',
         Size       => 1,
         SelectedID => $Param{ValidID} || $ValidID,
@@ -211,20 +215,20 @@ sub _MaskNewsForm {
 
     if ( $Self->{Subaction} ne 'Edit' && $Self->{Subaction} ne 'Add' ) {
 
-        my %NewsList = $Self->{NewsObject}->NewsList();
+        my %NewsList = $NewsObject->NewsList();
   
         if ( !%NewsList ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'NoNewsFound',
             );
         }
 
         for my $NewsID ( sort keys %NewsList ) {
-            my %News = $Self->{NewsObject}->NewsGet(
+            my %News = $NewsObject->NewsGet(
                 NewsID => $NewsID,
             );
 
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'NewsRow',
                 Data => \%News,
             );
@@ -237,7 +241,7 @@ sub _MaskNewsForm {
     my $TemplateFile = 'AdminProductNewsList';
     $TemplateFile = 'AdminProductNewsForm' if $Self->{Subaction};
 
-    return $Self->{LayoutObject}->Output(
+    return $LayoutObject->Output(
         TemplateFile => $TemplateFile,
         Data         => \%Param
     );
