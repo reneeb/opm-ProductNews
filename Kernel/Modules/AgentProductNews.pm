@@ -12,8 +12,11 @@ package Kernel::Modules::AgentProductNews;
 use strict;
 use warnings;
 
-use Kernel::System::ProductNews;
-use Kernel::System::HTMLUtils;
+our @ObjectDependencies = qw(
+    Kernel::System::ProductNews
+    Kernel::System::HTMLUtils
+    Kernel::System::Web::Request
+);
 
 our $VERSION = 0.01;
 
@@ -24,35 +27,31 @@ sub new {
     my $Self = {%Param};
     bless( $Self, $Type );
 
-    # check all needed objects
-    for my $Needed (qw(ParamObject DBObject LayoutObject ConfigObject LogObject TimeObject)) {
-        if ( !$Self->{$Needed} ) {
-            $Self->{LayoutObject}->FatalError( Message => "Got no $Needed!" );
-        }
-    }
-
-    # create needed objects
-    $Self->{NewsObject}  = Kernel::System::ProductNews->new(%Param);
-    $Self->{UtilsObject} = Kernel::System::HTMLUtils->new( %Param );
-
     return $Self;
 }
 
 sub Run {
     my ( $Self, %Param ) = @_;
+
+    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
+    my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
+    my $UtilsObject  = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+
     my @Params = (qw(NewsID ID Mode));
 
     my %GetParam;
-    for (@Params) {
-        $GetParam{$_} = $Self->{ParamObject}->GetParam( Param => $_ ) || '';
+    for my $ParamName (@Params) {
+        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName ) || '';
     }
 
-    my %News = $Self->{NewsObject}->NewsGet( NewsID => $GetParam{ID} || $GetParam{NewsID});
+    my %News = $NewsObject->NewsGet( NewsID => $GetParam{ID} || $GetParam{NewsID});
 
-    $News{Body} = $Self->{UtilsObject}->ToHTML( String => $News{Body} );
+    $News{Body} = $UtilsObject->ToHTML( String => $News{Body} );
 
     my %Opts;
-    my $NavigationBar = $Self->{LayoutObject}->NavigationBar();
+    my $NavigationBar = $LayoutObject->NavigationBar();
     if( $GetParam{Mode} eq 'ContentOnly') {
         $Opts{Type}    = 'Small';
         $NavigationBar = '';
@@ -68,15 +67,15 @@ sub Run {
         $News{Body} .= '&nbsp;' x $Whitespaces;
     }
 
-    my $Content = $Self->{LayoutObject}->Output(
+    my $Content = $LayoutObject->Output(
         TemplateFile => 'AgentProductNews',
         Data         => \%News,
     );
 
-    my $Output = $Self->{LayoutObject}->Header( %Opts );
+    my $Output = $LayoutObject->Header( %Opts );
     $Output .= $NavigationBar;
     $Output .= $Content;
-    $Output .= $Self->{LayoutObject}->Footer( %Opts );
+    $Output .= $LayoutObject->Footer( %Opts );
     return $Output;
 }
 

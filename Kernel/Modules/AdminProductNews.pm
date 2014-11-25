@@ -12,14 +12,14 @@ package Kernel::Modules::AdminProductNews;
 use strict;
 use warnings;
 
+our $VERSION = 0.03;
+
 our @ObjectDependencies = qw(
     Kernel::System::ProductNews
     Kernel::System::HTMLUtils
     Kernel::System::Valid
     Kernel::System::Web::Request
 );
-
-our $VERSION = 0.03;
 
 sub new {
     my ( $Type, %Param ) = @_;
