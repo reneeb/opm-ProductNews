@@ -12,10 +12,14 @@ package Kernel::System::ProductNews;
 use strict;
 use warnings;
 
-use Kernel::System::User;
-use Kernel::System::Valid;
+our $VERSION = 0.03;
 
-our $VERSION = 0.02;
+our @ObjectDependencies = qw(
+    Kernel::System::User
+    Kernel::System::Valid
+    Kernel::System::DB
+    Kernel::System::Log
+);
 
 =head1 NAME
 
@@ -31,40 +35,6 @@ Kernel::System::ProductNews - backend for product news
 
 create an object
 
-    use Kernel::Config;
-    use Kernel::System::Encode;
-    use Kernel::System::Log;
-    use Kernel::System::Main;
-    use Kernel::System::DB;
-    use Kernel::System::ProductNews;
-
-    my $ConfigObject = Kernel::Config->new();
-    my $EncodeObject = Kernel::System::Encode->new(
-        ConfigObject => $ConfigObject,
-    );
-    my $LogObject = Kernel::System::Log->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-    );
-    my $MainObject = Kernel::System::Main->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-    );
-    my $DBObject = Kernel::System::DB->new(
-        ConfigObject => $ConfigObject,
-        EncodeObject => $EncodeObject,
-        LogObject    => $LogObject,
-        MainObject   => $MainObject,
-    );
-    my $NewsObject = Kernel::System::ProductNews->new(
-        ConfigObject => $ConfigObject,
-        LogObject    => $LogObject,
-        DBObject     => $DBObject,
-        MainObject   => $MainObject,
-        EncodeObject => $EncodeObject,
-    );
-
 =cut
 
 sub new {
@@ -74,15 +44,6 @@ sub new {
     my $Self = {};
     bless( $Self, $Type );
 
-    # check needed objects
-    for my $Object (qw(DBObject ConfigObject MainObject LogObject EncodeObject TimeObject)) {
-        $Self->{$Object} = $Param{$Object} || die "Got no $Object!";
-    }
-
-    # create needed objects
-    $Self->{UserObject}  = Kernel::System::User->new( %{$Self} );
-    $Self->{ValidObject} = Kernel::System::Valid->new( %{$Self} );
-    
     return $Self;
 }
 
@@ -103,10 +64,13 @@ to add a news
 sub NewsAdd {
     my ( $Self, %Param ) = @_;
 
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+    my $DBObject  = $Kernel::OM->Get('Kernel::System::DB');
+
     # check needed stuff
     for my $Needed (qw(Headline Teaser Body ValidID UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -115,7 +79,7 @@ sub NewsAdd {
     }
 
     # insert new news
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
         SQL => 'INSERT INTO product_news '
             . '(headline, teaser, body, create_time, create_by, valid_id, change_time, change_by) '
             . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?)',
@@ -130,19 +94,19 @@ sub NewsAdd {
     );
 
     # get new invoice id
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL   => 'SELECT MAX(id) FROM product_news WHERE headline = ?',
         Bind  => [ \$Param{Headline}, ],
         Limit => 1,
     );
 
     my $NewsID;
-    while ( my @Row = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Row = $DBObject->FetchrowArray() ) {
         $NewsID = $Row[0];
     }
 
     # log notice
-    $Self->{LogObject}->Log(
+    $LogObject->Log(
         Priority => 'notice',
         Message  => "News '$NewsID' created successfully ($Param{UserID})!",
     );
@@ -169,10 +133,13 @@ to update news
 sub NewsUpdate {
     my ( $Self, %Param ) = @_;
 
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+    my $DBObject  = $Kernel::OM->Get('Kernel::System::DB');
+
     # check needed stuff
     for my $Needed (qw(NewsID Headline Teaser Body ValidID UserID)) {
         if ( !$Param{$Needed} ) {
-            $Self->{LogObject}->Log(
+            $LogObject->Log(
                 Priority => 'error',
                 Message  => "Need $Needed!",
             );
@@ -181,7 +148,7 @@ sub NewsUpdate {
     }
 
     # insert new news
-    return if !$Self->{DBObject}->Do(
+    return if !$DBObject->Do(
         SQL => 'UPDATE product_news SET headline = ?, teaser = ?, body = ?, '
             . 'valid_id = ?, change_time = current_timestamp, change_by = ? '
             . 'WHERE id = ?',
@@ -220,9 +187,14 @@ This returns something like:
 sub NewsGet {
     my ( $Self, %Param ) = @_;
 
+    my $LogObject    = $Kernel::OM->Get('Kernel::System::Log');
+    my $DBObject     = $Kernel::OM->Get('Kernel::System::DB');
+    my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
+    my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
+
     # check needed stuff
     if ( !$Param{NewsID} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need NewsID!',
         );
@@ -230,7 +202,7 @@ sub NewsGet {
     }
 
     # sql
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL => 'SELECT id, headline, teaser, body, create_time, create_by, valid_id '
             . 'FROM product_news WHERE id = ?',
         Bind  => [ \$Param{NewsID} ],
@@ -238,7 +210,7 @@ sub NewsGet {
     );
 
     my %News;
-    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Data = $DBObject->FetchrowArray() ) {
         %News = (
             NewsID     => $Data[0],
             Headline   => $Data[1],
@@ -250,8 +222,8 @@ sub NewsGet {
         );
     }
 
-    $News{Valid}  = $Self->{ValidObject}->ValidLookup( ValidID => $News{ValidID} );
-    $News{Author} = $Self->{UserObject}->UserLookup( UserID => $News{CreateBy} );
+    $News{Valid}  = $ValidObject->ValidLookup( ValidID => $News{ValidID} );
+    $News{Author} = $UserObject->UserLookup( UserID => $News{CreateBy} );
 
     return %News;
 }
@@ -269,16 +241,19 @@ deletes a news entry. Returns 1 if it was successful, undef otherwise.
 sub NewsDelete {
     my ( $Self, %Param ) = @_;
 
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+    my $DBObject  = $Kernel::OM->Get('Kernel::System::DB');
+
     # check needed stuff
     if ( !$Param{NewsID} ) {
-        $Self->{LogObject}->Log(
+        $LogObject->Log(
             Priority => 'error',
             Message  => 'Need NewsID!',
         );
         return;
     }
 
-    return $Self->{DBObject}->Do(
+    return $DBObject->Do(
         SQL  => 'DELETE FROM product_news WHERE id = ?',
         Bind => [ \$Param{NewsID} ],
     );
@@ -303,23 +278,26 @@ the result looks like
 sub NewsList {
     my ( $Self, %Param ) = @_;
 
+    my $ValidObject = $Kernel::OM->Get('Kernel::System::Valid');
+    my $DBObject    = $Kernel::OM->Get('Kernel::System::DB');
+
     my $Where = '';
     my @Bind;
 
     if ( $Param{Valid} ) {
-        my $ValidID = $Self->{ValidObject}->ValidLookup( Valid => 'valid' );
+        my $ValidID = $ValidObject->ValidLookup( Valid => 'valid' );
         $Where = 'WHERE valid_id = ?';
         @Bind  = ( \$ValidID );
     }
 
     # sql
-    return if !$Self->{DBObject}->Prepare(
+    return if !$DBObject->Prepare(
         SQL  => "SELECT id, teaser FROM product_news $Where",
         Bind => \@Bind,
     );
 
     my %News;
-    while ( my @Data = $Self->{DBObject}->FetchrowArray() ) {
+    while ( my @Data = $DBObject->FetchrowArray() ) {
         $News{ $Data[0] } = $Data[1];
     }
 
