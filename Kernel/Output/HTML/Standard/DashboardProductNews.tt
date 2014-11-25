@@ -1,0 +1,44 @@
+# --
+# AgentDashboardProductNews.tt - provides HTML for global dashboard
+# Copyright (C) 2011-2014 Perl-Services.de, http://perl-services.de/
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<table class="DataTable">
+    <tbody>
+[% RenderBlockStart("News") %]
+        <tr>
+            <td>
+                <a href="#" onclick="Core.UI.Dialog.DynamicContentDialog('AgentProductNews', [% Data.NewsID | uri %], 'ContentOnly', '[% Translate("News Item") | html %]');" title="[% Translate(Data.Teaser) | html %]" >
+                [% Translate(Data.Headline, "100") | html %]
+                </a>
+            </td>
+[% RenderBlockStart("Teaser") %]
+            <td>
+                <a href="#" onclick="Core.UI.Dialog.DynamicContentDialog('AgentProductNews', [% Data.NewsID | uri %], 'ContentOnly', '[% Translate("News Item") | html %]');">
+                [% Data.Teaser %]
+                </a>
+            </td>
+[% RenderBlockEnd("Teaser") %]
+[% RenderBlockStart("CreateByInformation") %]
+            <td>
+                [% Translate("created by") | html %]: [% Data.UserLastname %] [% Data.UserFirstname %] ([% Data.UserLogin %])
+            </td>
+[% RenderBlockEnd("CreateByInformation") %]
+[% RenderBlockStart("EditDelete") %]
+            <td>
+                <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Edit;NewsID=[% Data.NewsID | uri %]">
+                [% Translate("edit") | html %]
+                </a> |
+                <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Delete;NewsID=[% Data.NewsID | uri %];RedirectAction=AgentDashboard;">
+                [% Translate("delete") | html %]
+                </a>
+            </td>
+[% RenderBlockEnd("EditDelete") %]
+        </tr>
+[% RenderBlockEnd("News") %]
+    </tbody>
+</table>

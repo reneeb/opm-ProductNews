@@ -1,5 +1,5 @@
 # --
-# AgentProductNews.dtl - provides HTML form for AgentProductNews
+# AgentProductNews.tt - provides HTML form for AgentProductNews
 # Copyright (C) 2011-2014 Perl-Services.de, http://perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
@@ -10,19 +10,19 @@
 <div class="MainBox ARIARoleMain">
     <div class="ClearLeft"></div>
     <div class="Headline">
-        <h1 title="$QData{"Headline"}">$QData{"Headline"}</h1>
+        <h1 title="[% Data.Headline | html %]">[% Data.Headline | html %]</h1>
         <div class="AdditionalInformation">
-            $QData{"CreateTime"} - $QData{"Author"}
+            [% Data.CreateTime | html %] - [% Data.Author | html %]
         </div>
     </div>
 
     <div class="ContentColumn">
         <div class="ActionRow">
-            <h3>$QData{"Teaser"}</h3>
+            <h3>[% Data.Teaser | html %]</h3>
         </div>
 
         <p>
-            $Data{"Body"}
+            [% Data.Body %]
         </p>
 
     </div>
