@@ -16,10 +16,10 @@
         <File Permission="644" Location="Kernel/Modules/AdminProductNews.pm" />
         <File Permission="644" Location="Kernel/Modules/AgentProductNews.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/DashboardProductNews.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsList.dtl" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsForm.dtl" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentProductNews.dtl" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/DashboardProductNews.dtl" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsList.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsForm.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentProductNews.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/DashboardProductNews.tt" />
         <File Permission="644" Location="Kernel/System/ProductNews.pm" />
         <File Permission="644" Location="doc/en/ProductNews.pod" />
         <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js"/>
