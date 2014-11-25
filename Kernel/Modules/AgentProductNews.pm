@@ -36,7 +36,6 @@ sub Run {
     my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
-    my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
     my $UtilsObject  = $Kernel::OM->Get('Kernel::System::HTMLUtils');
 
     my @Params = (qw(NewsID ID Mode));
