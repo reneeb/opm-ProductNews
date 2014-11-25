@@ -10,7 +10,7 @@
 "use strict";
 
 var Core = Core || {};
-Core.Agent = Core.Agent || {};
+Core.UI = Core.UI || {};
 
 /**
  * @namespace
@@ -44,7 +44,7 @@ Core.UI.Dialog = (function (TargetNS) {
             Data,
             function (HTML) {
                 Core.UI.Dialog.ShowContentDialog(
-                        HTML, 
+                        $.parseHTML(HTML), 
                         Title, 
                         '20px',
                         'Center',
