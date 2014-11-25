@@ -292,7 +292,7 @@ sub NewsList {
 
     # sql
     return if !$DBObject->Prepare(
-        SQL  => "SELECT id, teaser FROM product_news $Where",
+        SQL  => "SELECT id, teaser FROM product_news $Where ORDER BY create_time DESC",
         Bind => \@Bind,
     );
 
