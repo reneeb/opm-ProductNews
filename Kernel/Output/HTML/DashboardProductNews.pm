@@ -12,9 +12,11 @@ package Kernel::Output::HTML::DashboardProductNews;
 use strict;
 use warnings;
 
-use Kernel::System::ProductNews;
-use Kernel::System::Group;
-use Kernel::System::User;
+our @ObjectDependencies = qw(
+    Kernel::System::ProductNews
+    Kernel::System::Group
+    Kernel::System::User
+);
 
 our $VERSION = 0.02;
 
@@ -24,18 +26,6 @@ sub new {
     # allocate new hash for object
     my $Self = {%Param};
     bless( $Self, $Type );
-
-    # get needed objects
-    for (
-        qw(Config Name ConfigObject LogObject DBObject LayoutObject ParamObject CacheObject UserID)
-        )
-    {
-        die "Got no $_!" if ( !$Self->{$_} );
-    }
-
-    $Self->{NewsObject} = Kernel::System::ProductNews->new(%Param);
-    $Self->{UserObject} = $Self->{UserObject} || Kernel::System::User->new(%Param);
-    $Self->{GroupObject} = $Self->{GroupObject} || Kernel::System::Group->new(%Param);
 
     return $Self;
 }
@@ -57,21 +47,28 @@ sub Config {
 sub Run {
     my ( $Self, %Param ) = @_;
 
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $GroupObject  = $Kernel::OM->Get('Kernel::System::Group');
+    my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
+    my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
+    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+
     my $Content;
     my $ContentFound  = 0;
-    my $ShowTeaser    = $Self->{ConfigObject}->Get('ProductNews::ShowTeaser') || 0;
-    my $ShowCreatedBy = $Self->{ConfigObject}->Get('ProductNews::ShowCreatedBy') || 0;
-    my $EditDelete    = $Self->{ConfigObject}->Get('ProductNews::DashboardEditDelete') || 0;
-    my $EditDeleteGrp = $Self->{ConfigObject}->Get('ProductNews::DashboardEditDeleteGroup') || 'admin';
+    my $ShowTeaser    = $ConfigObject->Get('ProductNews::ShowTeaser') || 0;
+    my $ShowCreatedBy = $ConfigObject->Get('ProductNews::ShowCreatedBy') || 0;
+    my $EditDelete    = $ConfigObject->Get('ProductNews::DashboardEditDelete') || 0;
+    my $EditDeleteGrp = $ConfigObject->Get('ProductNews::DashboardEditDeleteGroup') || 'admin';
     my $IsAdmin = 0;
     
     # check if user is in productnews admin group...
-    my $EDGroupID = $Self->{GroupObject}->GroupLookup( Group => $EditDeleteGrp, );
-    my @GroupIDs = $Self->{GroupObject}->GroupMemberList(
+    my $EDGroupID = $GroupObject->GroupLookup( Group => $EditDeleteGrp, );
+    my @GroupIDs  = $GroupObject->GroupMemberList(
         UserID => $Self->{UserID},
         Type   => 'rw',
         Result => 'ID',
     );
+
     for my $GroupID (@GroupIDs) {
         if ($GroupID eq $EDGroupID) {
             $IsAdmin = 1;
@@ -80,7 +77,7 @@ sub Run {
     }
 
     # get news
-    my %ProductNews = $Self->{NewsObject}->NewsList(
+    my %ProductNews = $NewsObject->NewsList(
         Valid => 1,
     );
 
@@ -88,19 +85,19 @@ sub Run {
     for my $NewsID ( keys %ProductNews ) {
 
         # get news data
-        my %NewsInfo = $Self->{NewsObject}->NewsGet(
+        my %NewsInfo = $NewsObject->NewsGet(
             NewsID => $NewsID,
         );
 
         # get user information
-        my %UserInformation = $Self->{UserObject}->GetUserData(
+        my %UserInformation = $UserObject->GetUserData(
             UserID => $NewsInfo{CreateBy},
         );
 
         # remember if content got shown
         $ContentFound = 1;
         
-        $Self->{LayoutObject}->Block(
+        $LayoutObject->Block(
             Name => 'News',
             Data => {
                 %NewsInfo,
@@ -108,7 +105,7 @@ sub Run {
         );
 
         if( $ShowTeaser ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'Teaser',
                 Data => {
                     %NewsInfo,
@@ -117,7 +114,7 @@ sub Run {
         }
 
         if( $ShowCreatedBy ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'CreateByInformation',
                 Data => {
                     %UserInformation,
@@ -126,7 +123,7 @@ sub Run {
         }
 
         if( $EditDelete && ($NewsInfo{CreateBy} eq $Self->{UserID} || $IsAdmin) ) {
-            $Self->{LayoutObject}->Block(
+            $LayoutObject->Block(
                 Name => 'EditDelete',
                 Data => {
                     %NewsInfo,
@@ -139,7 +136,7 @@ sub Run {
 
     # check if content got shown, if true, render block
     if ($ContentFound) {
-        $Content = $Self->{LayoutObject}->Output(
+        $Content = $LayoutObject->Output(
             TemplateFile => 'DashboardProductNews',
             Data         => {
                 %{ $Self->{Config} },
