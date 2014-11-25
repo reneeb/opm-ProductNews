@@ -10,6 +10,10 @@ OTRS system should know about, you can use ProductNews to handle this.
 With this extension a new dashboard widget is created and administrators can add
 news.
 
+=head1 REPOSITORY AND BUGTRACKER
+
+The code repository and a bugtracker is available at L<http://github.com/reneeb/otrs-ProductNews>.
+
 =head1 CONTRIBUTORS
 
 Torsten Thau, c.a.p.e IT (L<http://cape-it.de>)
