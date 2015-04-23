@@ -30,6 +30,7 @@
             <Column Name="headline" Required="true" Size="250" Type="VARCHAR"/>
             <Column Name="teaser" Required="true" Size="250" Type="VARCHAR"/>
             <Column Name="body" Required="true" Size="3000" Type="VARCHAR"/>
+            <Column Name="displays" Required="false" Size="3000" Type="VARCHAR"/>
             <Column Name="valid_id" Required="true" Type="SMALLINT"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
@@ -47,6 +48,11 @@
             </ForeignKey>
         </TableCreate>
     </DatabaseInstall>
+    <DatabaseUpgrade Type="post">
+        <TableAlter Name="product_news" Version="4.0.2">
+            <ColumnAdd Name="displays" Required="false" Size="3000" Type="VARCHAR"/>
+        </TableAlter>
+    </DatabaseUninstall>
     <DatabaseUninstall Type="post">
         <TableDrop Name="product_news"/>
     </DatabaseUninstall>

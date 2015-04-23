@@ -83,6 +83,21 @@
                         </div>
                         <div class="Clear"></div>
 
+                        <label for="Display" class="Mandatory">
+                            <span class="Marker">*</span>
+                            [% Translate("Display") | html %]:
+                        </label>
+                        <div class="Field">
+                            [% Data.DisplaySelect %]
+                            <div id="DisplayError" class="TooltipErrorMessage">
+                                <p>[% Translate("Select a display.") | html %]</p>
+                            </div>
+                            <div id="DisplayServerError" class="TooltipErrorMessage">
+                                <p>[% Translate("Select a display.") | html %]</p>
+                            </div>
+                        </div>
+                        <div class="Clear"></div>
+
                         <label for="ValidID" class="Mandatory">
                             <span class="Marker">*</span>
                             [% Translate("Valid") | html %]:

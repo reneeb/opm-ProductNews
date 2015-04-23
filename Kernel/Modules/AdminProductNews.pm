@@ -18,6 +18,7 @@ our @ObjectDependencies = qw(
     Kernel::System::ProductNews
     Kernel::System::HTMLUtils
     Kernel::System::Valid
+    Kernel::System::JSON
     Kernel::System::Web::Request
 );
 
@@ -43,6 +44,10 @@ sub Run {
     my %GetParam;
     for (@Params) {
         $GetParam{$_} = $ParamObject->GetParam( Param => $_ ) || '';
+    }
+
+    for my $ArrayParam (qw(Display) ) {
+        $GetParam{$ArrayParam} = [ $ParamObject->GetArray( Param => $ArrayParam ) ];
     }
 
     # ------------------------------------------------------------ #
@@ -87,6 +92,10 @@ sub Run {
             if ( !$GetParam{$Param} ) {
                 $Errors{ $Param . 'Invalid' } = 'ServerError';
             }
+        }
+
+        if ( ! @{ $GetParam{Display} } ) {
+            $Errors{DisplayInvalid} = 'ServerError';
         }
 
         if ( %Errors ) {
@@ -138,6 +147,10 @@ sub Run {
             if ( !$GetParam{$Param} ) {
                 $Errors{ $Param . 'Invalid' } = 'ServerError';
             }
+        }
+
+        if ( ! @{ $GetParam{Display} } ) {
+            $Errors{DisplayInvalid} = 'ServerError';
         }
 
         if ( %Errors ) {
@@ -197,11 +210,32 @@ sub _MaskNewsForm {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
     my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     if ( $Self->{Subaction} eq 'Edit' ) {
         my %News = $NewsObject->NewsGet( NewsID => $Param{NewsID} );
         $Param{$_} = $News{$_} for keys %News;
+
+        $Param{Display} = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
+            Data => $News{Display} || '["Dashboard"]',
+        );
     }
+
+    my $OutputFilter = $ConfigObject->{'Frontend::Output::FilterElementPre'} || {};
+    my $PNFilter     = $OutputFilter->{OutputFilterProductNews} ||{};
+    my @Templates    = @{ $PNFilter->{Templates} || [] };
+
+    $Param{DisplaySelect} = $LayoutObject->BuildSelection(
+        Data => {
+            'Dashboard' => 'Dashboard',
+            map{ $_ => $_ }@Templates,
+        },
+        Name       => 'Display',
+        SelectedID => $Param{Display},
+        Class      => 'ValidateRequired ' . ( $Param{DisplayInvalid} || '' ),
+        Multiple   => 1,
+        Size       => 5,
+    );
 
     my $ValidID = $ValidObject->ValidLookup( Valid => 'valid' );
 

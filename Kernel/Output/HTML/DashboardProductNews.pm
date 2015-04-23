@@ -78,7 +78,8 @@ sub Run {
 
     # get news
     my %ProductNews = $NewsObject->NewsList(
-        Valid => 1,
+        Valid   => 1,
+        Display => 'Dashboard',
     );
 
     # show messages
@@ -130,9 +131,7 @@ sub Run {
                 },
             );
         }
-
     }
-
 
     # check if content got shown, if true, render block
     if ($ContentFound) {

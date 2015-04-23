@@ -19,6 +19,7 @@ our @ObjectDependencies = qw(
     Kernel::System::Valid
     Kernel::System::DB
     Kernel::System::Log
+    Kernel::System::JSON
 );
 
 =head1 NAME
@@ -55,6 +56,7 @@ to add a news
         Headline => 'A headline for the news',
         Teaser   => 'A teaser for the news',
         Body     => 'Anything is happened',
+        Displays => '[]',                     # JSON Array
         ValidID  => 1,
         UserID   => 123,
     );
@@ -68,7 +70,7 @@ sub NewsAdd {
     my $DBObject  = $Kernel::OM->Get('Kernel::System::DB');
 
     # check needed stuff
-    for my $Needed (qw(Headline Teaser Body ValidID UserID)) {
+    for my $Needed (qw(Headline Teaser Body ValidID UserID Displays)) {
         if ( !$Param{$Needed} ) {
             $LogObject->Log(
                 Priority => 'error',
@@ -81,8 +83,8 @@ sub NewsAdd {
     # insert new news
     return if !$DBObject->Do(
         SQL => 'INSERT INTO product_news '
-            . '(headline, teaser, body, create_time, create_by, valid_id, change_time, change_by) '
-            . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?)',
+            . '(headline, teaser, body, create_time, create_by, valid_id, change_time, change_by, displays) '
+            . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?, ?)',
         Bind => [
             \$Param{Headline},
             \$Param{Teaser},
@@ -90,6 +92,7 @@ sub NewsAdd {
             \$Param{UserID},
             \$Param{ValidID},
             \$Param{UserID},
+            \$Param{Displays},
         ],
     );
 
@@ -124,6 +127,7 @@ to update news
         Headline => 'A headline for the news',
         Teaser   => 'A teaser for the news',
         Body     => 'Anything is happened',
+        Displays => '[]',                     # JSON Array
         ValidID  => 1,
         UserID   => 123,
     );
@@ -137,7 +141,7 @@ sub NewsUpdate {
     my $DBObject  = $Kernel::OM->Get('Kernel::System::DB');
 
     # check needed stuff
-    for my $Needed (qw(NewsID Headline Teaser Body ValidID UserID)) {
+    for my $Needed (qw(NewsID Headline Teaser Body ValidID UserID Displays)) {
         if ( !$Param{$Needed} ) {
             $LogObject->Log(
                 Priority => 'error',
@@ -150,7 +154,8 @@ sub NewsUpdate {
     # insert new news
     return if !$DBObject->Do(
         SQL => 'UPDATE product_news SET headline = ?, teaser = ?, body = ?, '
-            . 'valid_id = ?, change_time = current_timestamp, change_by = ? '
+            . 'valid_id = ?, change_time = current_timestamp, change_by = ?, '
+            . 'displays = ? '
             . 'WHERE id = ?',
         Bind => [
             \$Param{Headline},
@@ -158,6 +163,7 @@ sub NewsUpdate {
             \$Param{Body},
             \$Param{ValidID},
             \$Param{UserID},
+            \$Param{Displays},
             \$Param{NewsID},
         ],
     );
@@ -178,6 +184,7 @@ This returns something like:
         'Headline'   => 'This is the headline',
         'Teaser'     => 'A short abstract',
         'Body'       => 'This is the long text of the news',
+        'Displays'   => '["Dashboard"]',
         'CreateTime' => '2010-04-07 15:41:15',
         'CreateBy'   => 123,
     );
@@ -203,7 +210,7 @@ sub NewsGet {
 
     # sql
     return if !$DBObject->Prepare(
-        SQL => 'SELECT id, headline, teaser, body, create_time, create_by, valid_id '
+        SQL => 'SELECT id, headline, teaser, body, create_time, create_by, valid_id, displays '
             . 'FROM product_news WHERE id = ?',
         Bind  => [ \$Param{NewsID} ],
         Limit => 1,
@@ -219,6 +226,7 @@ sub NewsGet {
             CreateTime => $Data[4],
             CreateBy   => $Data[5],
             ValidID    => $Data[6],
+            Displays   => $Data[7],
         );
     }
 
@@ -266,6 +274,14 @@ returns a hash of all news
 
     my %Newss = $NewsObject->NewsList();
 
+returns a hash of all valid news
+
+    my %Newss = $NewsObject->NewsList( Valid => 1 );
+
+returns a hash of all news for a specific display
+
+    my %Newss = $NewsObject->NewsList( Display => 'AgentTicketEmail' );
+
 the result looks like
 
     %Newss = (
@@ -280,6 +296,7 @@ sub NewsList {
 
     my $ValidObject = $Kernel::OM->Get('Kernel::System::Valid');
     my $DBObject    = $Kernel::OM->Get('Kernel::System::DB');
+    my $JSONObject  = $Kernel::OM->Get('Kernel::System::JSON');
 
     my $Where = '';
     my @Bind;
@@ -292,12 +309,19 @@ sub NewsList {
 
     # sql
     return if !$DBObject->Prepare(
-        SQL  => "SELECT id, teaser FROM product_news $Where ORDER BY create_time DESC",
+        SQL  => "SELECT id, teaser, displays FROM product_news $Where ORDER BY create_time DESC",
         Bind => \@Bind,
     );
 
     my %News;
+
+    DATA:
     while ( my @Data = $DBObject->FetchrowArray() ) {
+        if ( $Param{Display} ) {
+            my $Displays = $JSONObject->Decode( Data => $Data[2] || '["Dashboard"]' );
+            next DATA if !first{ $Param{Display} eq $_ } @{$Displays};
+        }
+
         $News{ $Data[0] } = $Data[1];
     }
 
