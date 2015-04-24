@@ -1,0 +1,86 @@
+# --
+# ProductNewsSnippet.tt - provides HTML for ProductNews.pm
+# Copyright (C) 2015 Perl-Services.de, http://www.perl-services.de 
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+            <div class="WidgetSimple">
+                <div class="Header">
+                    <h2>[% Translate("News") | html %]</h2>
+                </div>
+                <div class="Content">
+
+<div class="WidgetSimple Collapsed">
+   <div class="Header">
+     <div class="WidgetAction Toggle">
+       <a href="#" title="[% Translate("All News") %]" aria-controls="ALLNEWS" aria-expanded="false">
+           <i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i>
+       </a>
+     </div>
+     <h2>[% Translate("All News") %]</h2>
+   </div>
+   <div id="ALLNEWS" class="Content">
+
+<table class="DataTable">
+    <tbody>
+[% RenderBlockStart("News") %]
+        <tr>
+            <td>
+                <a href="#" onclick="Core.UI.Dialog.DynamicContentDialog('AgentProductNews', [% Data.NewsID | uri %], 'ContentOnly', '[% Translate("News Item") | html %]');" title="[% Translate(Data.Teaser) | html %]" >
+                [% Translate(Data.Headline, "100") | html %]
+                </a>
+            </td>
+[% RenderBlockStart("Teaser") %]
+            <td>
+                <a href="#" onclick="Core.UI.Dialog.DynamicContentDialog('AgentProductNews', [% Data.NewsID | uri %], 'ContentOnly', '[% Translate("News Item") | html %]');">
+                [% Data.Teaser %]
+                </a>
+            </td>
+[% RenderBlockEnd("Teaser") %]
+[% RenderBlockStart("CreateByInformation") %]
+            <td>
+                [% Translate("created by") | html %]: [% Data.UserLastname %] [% Data.UserFirstname %] ([% Data.UserLogin %])
+            </td>
+[% RenderBlockEnd("CreateByInformation") %]
+[% RenderBlockStart("EditDelete") %]
+            <td>
+                <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Edit;NewsID=[% Data.NewsID | uri %]">
+                [% Translate("edit") | html %]
+                </a> |
+                <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Delete;NewsID=[% Data.NewsID | uri %];RedirectAction=AgentDashboard;">
+                [% Translate("delete") | html %]
+                </a>
+            </td>
+[% RenderBlockEnd("EditDelete") %]
+        </tr>
+[% RenderBlockEnd("News") %]
+   </tbody>
+</table>
+
+   </div>
+</div>
+
+[% RenderBlockStart("HasDecision") %]
+  <table class="DataTable">
+    <thead>
+      <tr>
+        <th>[% Translate("Date") | html %]</th>
+        <th>[% Translate("Title") | html %]</th>
+      </tr>
+    </thead>
+    <tbody>
+[% RenderBlockStart("Decision") %]
+      <tr>
+        <td>[% Data.Date | Localize("TimeShort") %]</td>
+        <td><a href="[% Config("Asepo::Host") %]/project/decision/[% Data.ID | url %]">[% Data.TitleShort | html %]</a></td>
+      </tr>
+[% RenderBlockEnd("Decision") %]
+    </tbody>
+  </table>
+  <a href="[% Env("CGIHandle") %]?Action=AgentAsepoDecisions&TicketID=[% Data.TicketID %]" class="AsPopup">[% Translate("Details") %]</a>
+[% RenderBlockEnd("HasDecision") %]
+                </div>
+            </div>
