@@ -12,7 +12,7 @@ package Kernel::System::ProductNews;
 use strict;
 use warnings;
 
-our $VERSION = 0.03;
+use List::Util qw(first);
 
 our @ObjectDependencies = qw(
     Kernel::System::User

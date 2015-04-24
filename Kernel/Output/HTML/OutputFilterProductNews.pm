@@ -54,7 +54,7 @@ sub Run {
         );
 
         $LayoutObject->Block(
-            Name => 'NewsItem',
+            Name => 'News',
             Data => \%News,
         );
     }
@@ -64,6 +64,7 @@ sub Run {
     );
 
     ${ $Param{Data} } =~ s{
+        <div \s+ class="SidebarColumn"> \K
     }{
         $Snippet
     }xms;

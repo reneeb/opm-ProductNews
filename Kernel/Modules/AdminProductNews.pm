@@ -39,6 +39,7 @@ sub Run {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
     my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
+    my $JSONObject   = $Kernel::OM->Get('Kernel::System::JSON');
 
     my @Params = (qw(NewsID Headline Teaser Body ValidID UserID RedirectAction));
     my %GetParam;
@@ -113,6 +114,10 @@ sub Run {
             return $Output;
         }
 
+        $GetParam{Displays} = $JSONObject->Encode(
+            Data => $GetParam{Display},
+        );
+
         my $Update = $NewsObject->NewsUpdate(
             %GetParam,
             UserID => $Self->{UserID},
@@ -168,6 +173,10 @@ sub Run {
             return $Output;
         }
 
+        $GetParam{Displays} = $JSONObject->Encode(
+            Data => $GetParam{Display},
+        );
+
         my $Success = $NewsObject->NewsAdd(
             %GetParam,
             UserID => $Self->{UserID},
@@ -217,13 +226,13 @@ sub _MaskNewsForm {
         $Param{$_} = $News{$_} for keys %News;
 
         $Param{Display} = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
-            Data => $News{Display} || '["Dashboard"]',
+            Data => $News{Displays} || '["Dashboard"]',
         );
     }
 
     my $OutputFilter = $ConfigObject->{'Frontend::Output::FilterElementPre'} || {};
     my $PNFilter     = $OutputFilter->{OutputFilterProductNews} ||{};
-    my @Templates    = @{ $PNFilter->{Templates} || [] };
+    my @Templates    = keys %{ $PNFilter->{Templates} || {} };
 
     $Param{DisplaySelect} = $LayoutObject->BuildSelection(
         Data => {
