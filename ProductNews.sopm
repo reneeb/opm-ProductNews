@@ -52,7 +52,7 @@
         <TableAlter Name="product_news" Version="4.0.2">
             <ColumnAdd Name="displays" Required="false" Size="3000" Type="VARCHAR"/>
         </TableAlter>
-    </DatabaseUninstall>
+    </DatabaseUpgrade>
     <DatabaseUninstall Type="post">
         <TableDrop Name="product_news"/>
     </DatabaseUninstall>
