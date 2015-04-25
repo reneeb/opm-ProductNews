@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <otrs_config version="1.0" init="Application">
-    
     <ConfigItem Name="Loader::Agent::CommonJS###090-ProductX" Required="1" Valid="1">
         <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
         <Group>ProductNews</Group>
@@ -11,8 +10,20 @@
             </Array>
         </Setting>
     </ConfigItem>
-    
     <ConfigItem Name="Frontend::Module###AgentProductNews" Required="0" Valid="1">
+        <Description Lang="en">Frontend module registration for the  agent interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>
+        <Group>ProductNews</Group>
+        <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description> Product News</Description>
+                <NavBarName></NavBarName>
+                <Title> Product News</Title>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Frontend::Module###AgentProductNewsMarkRead" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the  agent interface.</Description>
         <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>
         <Group>ProductNews</Group>
@@ -130,6 +141,28 @@
                     </Hash>
                 </Item>
             </Hash>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ProductNews::ShowTeaserWidget" Required="1" Valid="1">
+        <Description Translatable="1">Dis-/enables displaying the teaser text of a news entry.</Description>
+        <Group>ProductNews</Group>
+        <SubGroup>Core::ProductNews</SubGroup>
+        <Setting>
+            <Option SelectedID="1">
+                <Item Key="0">Disabled</Item>
+                <Item Key="1">Enabled</Item>
+            </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="ProductNews::ShowCreatedByWidget" Required="1" Valid="1">
+        <Description Translatable="1">Dis-/enables displaying the creator of a news entry.</Description>
+        <Group>ProductNews</Group>
+        <SubGroup>Core::ProductNews</SubGroup>
+        <Setting>
+            <Option SelectedID="0">
+                <Item Key="0">Disabled</Item>
+                <Item Key="1">Enabled</Item>
+            </Option>
         </Setting>
     </ConfigItem>
 </otrs_config>
