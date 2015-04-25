@@ -35,6 +35,8 @@ sub Data {
 
     $Lang->{'Create and manage news.'} = 'Nachrichten erstellen und verwalten.';
 
+    $Lang->{'All News'}        = 'Alle Nachrichten';
+
     return 1;
 }
 
