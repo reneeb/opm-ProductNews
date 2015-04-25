@@ -69,12 +69,14 @@
                                 [% Data.Author | html %]
                             </td>
                             <td>
+[% RenderBlockStart("EditDelete") %]
                                 <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Edit;NewsID=[% Data.NewsID | uri %]">
                                 [% Translate("edit") | html %]
                                 </a> |
                                 <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Delete;NewsID=[% Data.NewsID | uri %]">
                                 [% Translate("delete") | html %]
                                 </a>
+[% RenderBlockEnd("EditDelete") %]
                             </td>
                         </tr>
 [% RenderBlockEnd("NewsRow") %]

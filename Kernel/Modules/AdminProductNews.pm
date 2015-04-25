@@ -51,6 +51,22 @@ sub Run {
         $GetParam{$ArrayParam} = [ $ParamObject->GetArray( Param => $ArrayParam ) ];
     }
 
+    my $IsAdmin = $Self->_IsAdmin();
+    if ( $Self->{Subaction} && $GetParam{NewsID} ) {
+        my %News = $NewsObject->NewsGet( NewsID => $GetParam{NewsID} );
+        if ( !( $IsAdmin || $News{CreateBy} == $Self->{UserID} ) ) {
+            my $TranslatableMessage = $Self->{LayoutObject}->{LanguageObject}->Translate(
+                "We are sorry, you do not have permissions to edit this news item."
+            );
+    
+            return $Self->{LayoutObject}->NoPermission(
+                Message    => $TranslatableMessage,
+                WithHeader => 'yes',
+            );
+        }
+    }
+
+
     # ------------------------------------------------------------ #
     # get data 2 form
     # ------------------------------------------------------------ #
@@ -206,7 +222,7 @@ sub Run {
     else {
         my $Output = $LayoutObject->Header();
         $Output .= $LayoutObject->NavigationBar();
-        $Output .= $Self->_MaskNewsForm();
+        $Output .= $Self->_MaskNewsForm( IsAdmin => $IsAdmin );
         $Output .= $LayoutObject->Footer();
         return $Output;
     }
@@ -275,6 +291,13 @@ sub _MaskNewsForm {
                 Name => 'NewsRow',
                 Data => \%News,
             );
+
+            if ( $Param{IsAdmin} || $Self->{UserID} == $News{CreateBy} ) {
+                $LayoutObject->Block(
+                    Name => 'EditDelete',
+                    Data => \%News,
+                );
+            }
         }
     }
 
@@ -288,6 +311,34 @@ sub _MaskNewsForm {
         TemplateFile => $TemplateFile,
         Data         => \%Param
     );
+}
+
+sub _IsAdmin {
+    my ($Self) = @_;
+
+    my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
+    my $GroupObject  = $Kernel::OM->Get('Kernel::System::Group');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+
+    my $EditDelete    = $ConfigObject->Get('ProductNews::DashboardEditDelete') || 0;
+    my $EditDeleteGrp = $ConfigObject->Get('ProductNews::DashboardEditDeleteGroup') || 'admin';
+    my $IsAdmin       = 0;
+
+    my $EDGroupID = $GroupObject->GroupLookup( Group => $EditDeleteGrp, );
+    my @GroupIDs  = $GroupObject->GroupMemberList(
+        UserID => $Self->{UserID},
+        Type   => 'rw',
+        Result => 'ID',
+    );
+
+    for my $GroupID (@GroupIDs) {
+        if ($GroupID eq $EDGroupID) {
+            $IsAdmin = 1;
+            last;
+        };
+    }
+
+    return $IsAdmin;
 }
 
 1;

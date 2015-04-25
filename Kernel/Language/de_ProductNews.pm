@@ -36,6 +36,8 @@ sub Data {
     $Lang->{'Create and manage news.'} = 'Nachrichten erstellen und verwalten.';
 
     $Lang->{'All News'}        = 'Alle Nachrichten';
+    $Lang->{"We are sorry, you do not have permissions to edit this news item."} =
+        'Sie haben keine Berechtigung diesen News-Eintrag zu bearbeiten';
 
     return 1;
 }
