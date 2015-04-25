@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.1">
     <Name>ProductNews</Name>
-    <Version>4.0.3</Version>
+    <Version>4.0.4</Version>
     <Vendor>Perl-Services.de</Vendor>
     <URL>http://perl-services.de.de/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -14,12 +14,15 @@
         <File Permission="644" Location="Kernel/Config/Files/ProductNews.xml" />
         <File Permission="644" Location="Kernel/Language/de_ProductNews.pm" />
         <File Permission="644" Location="Kernel/Modules/AdminProductNews.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentProductNewsMarkRead.pm" />
         <File Permission="644" Location="Kernel/Modules/AgentProductNews.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/DashboardProductNews.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/OutputFilterProductNews.pm" />
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsList.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsForm.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentProductNews.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DashboardProductNews.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/ProductNewsSnippet.tt" />
         <File Permission="644" Location="Kernel/System/ProductNews.pm" />
         <File Permission="644" Location="doc/en/ProductNews.pod" />
         <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js"/>
