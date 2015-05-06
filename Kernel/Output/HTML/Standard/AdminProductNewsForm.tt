@@ -98,6 +98,14 @@
                         </div>
                         <div class="Clear"></div>
 
+                        <label for="InvalidateUsed">
+                            [% Translate("Invalidate date") | html %]:
+                        </label>
+                        <div class="Field">
+                            [% Data.InvalidateDate %]
+                        </div>
+                        <div class="Clear"></div>
+
                         <label for="ValidID" class="Mandatory">
                             <span class="Marker">*</span>
                             [% Translate("Valid") | html %]:

@@ -19,7 +19,9 @@ our @ObjectDependencies = qw(
     Kernel::System::HTMLUtils
     Kernel::System::Valid
     Kernel::System::JSON
+    Kernel::System::Time
     Kernel::System::Web::Request
+    Kernel::Output::HTML::Layout
 );
 
 sub new {
@@ -40,8 +42,13 @@ sub Run {
     my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
     my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
     my $JSONObject   = $Kernel::OM->Get('Kernel::System::JSON');
+    my $TimeObject   = $Kernel::OM->Get('Kernel::System::Time');
 
-    my @Params = (qw(NewsID Headline Teaser Body ValidID UserID RedirectAction));
+    my @Params = (qw(
+        NewsID Headline Teaser Body ValidID UserID RedirectAction
+        InvalidateYear InvalidateMonth InvalidateDay InvalidateHour
+        InvalidateMinute InvalidateUsed
+    ));
     my %GetParam;
     for (@Params) {
         $GetParam{$_} = $ParamObject->GetParam( Param => $_ ) || '';
@@ -49,6 +56,31 @@ sub Run {
 
     for my $ArrayParam (qw(Display) ) {
         $GetParam{$ArrayParam} = [ $ParamObject->GetArray( Param => $ArrayParam ) ];
+    }
+
+    # transform invalidate time, time stamp based on user time zone
+    if (
+        $GetParam{InvalidateUsed}
+        && defined $GetParam{InvalidateYear}
+        && defined $GetParam{InvalidateMonth}
+        && defined $GetParam{InvalidateDay}
+        && defined $GetParam{InvalidateHour}
+        && defined $GetParam{InvalidateMinute}
+        )
+    {
+        %GetParam = $LayoutObject->TransfromDateSelection(
+            %GetParam,
+            Prefix => 'Invalidate',
+        );
+
+        $GetParam{InvalidateEpoche} = $TimeObject->Date2SystemTime(
+            Year   => $GetParam{InvalidateYear},
+            Month  => $GetParam{InvalidateMonth},
+            Day    => $GetParam{InvalidateDay},
+            Hour   => $GetParam{InvalidateHour},
+            Minute => $GetParam{InvalidateMinute},
+            Second => 0,
+        );
     }
 
     my $IsAdmin = $Self->_IsAdmin();
@@ -236,6 +268,7 @@ sub _MaskNewsForm {
     my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
     my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $TimeObject   = $Kernel::OM->Get('Kernel::System::Time');
 
     if ( $Self->{Subaction} eq 'Edit' ) {
         my %News = $NewsObject->NewsGet( NewsID => $Param{NewsID} );
@@ -244,6 +277,13 @@ sub _MaskNewsForm {
         $Param{Display} = $Kernel::OM->Get('Kernel::System::JSON')->Decode(
             Data => $News{Displays} || '["Dashboard"]',
         );
+
+        if ( $News{InvalidateEpoche} ) {
+            $Param{InvalidateUsed} = 1;
+
+            (undef, @Param{ qw/InvalidateMinute InvalidateHour InvalidateDay InvalidateMonth InvalidateYear/ } ) =
+                $TimeObject->SystemTime2Date( SystemTime => $News{InvalidateEpoche} );
+        }
     }
 
     my $OutputFilter = $ConfigObject->{'Frontend::Output::FilterElementPre'} || {};
@@ -270,6 +310,14 @@ sub _MaskNewsForm {
         Size       => 1,
         SelectedID => $Param{ValidID} || $ValidID,
         HTMLQuote  => 1,
+    );
+
+    $Param{InvalidateDate} = $LayoutObject->BuildDateSelection(
+        %Param,
+        Prefix             => 'Invalidate',
+        Format             => 'DateInputFormatLong',
+        InvalidateUsed     => $Param{InvalidateUsed},
+        InvalidateOptional => 1,
     );
 
     if ( $Self->{Subaction} ne 'Edit' && $Self->{Subaction} ne 'Add' ) {

@@ -19,6 +19,7 @@ our @ObjectDependencies = qw(
     Kernel::System::Valid
     Kernel::System::DB
     Kernel::System::Log
+    Kernel::System::Time
     Kernel::System::JSON
 );
 
@@ -83,8 +84,9 @@ sub NewsAdd {
     # insert new news
     return if !$DBObject->Do(
         SQL => 'INSERT INTO product_news '
-            . '(headline, teaser, body, create_time, create_by, valid_id, change_time, change_by, displays) '
-            . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?, ?)',
+            . '(headline, teaser, body, create_time, create_by, valid_id, '
+            . ' change_time, change_by, displays, invalidate_epoche) '
+            . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?, ?, ?)',
         Bind => [
             \$Param{Headline},
             \$Param{Teaser},
@@ -93,6 +95,7 @@ sub NewsAdd {
             \$Param{ValidID},
             \$Param{UserID},
             \$Param{Displays},
+            \$Param{InvalidateEpoche},
         ],
     );
 
@@ -155,7 +158,7 @@ sub NewsUpdate {
     return if !$DBObject->Do(
         SQL => 'UPDATE product_news SET headline = ?, teaser = ?, body = ?, '
             . 'valid_id = ?, change_time = current_timestamp, change_by = ?, '
-            . 'displays = ? '
+            . 'displays = ?, invalidate_epoche = ? '
             . 'WHERE id = ?',
         Bind => [
             \$Param{Headline},
@@ -164,6 +167,7 @@ sub NewsUpdate {
             \$Param{ValidID},
             \$Param{UserID},
             \$Param{Displays},
+            \$Param{InvalidateEpoche},
             \$Param{NewsID},
         ],
     );
@@ -210,7 +214,8 @@ sub NewsGet {
 
     # sql
     return if !$DBObject->Prepare(
-        SQL => 'SELECT id, headline, teaser, body, create_time, create_by, valid_id, displays '
+        SQL => 'SELECT id, headline, teaser, body, create_time, create_by, '
+            . '     valid_id, displays, invalidate_epoche '
             . 'FROM product_news WHERE id = ?',
         Bind  => [ \$Param{NewsID} ],
         Limit => 1,
@@ -219,14 +224,15 @@ sub NewsGet {
     my %News;
     while ( my @Data = $DBObject->FetchrowArray() ) {
         %News = (
-            NewsID     => $Data[0],
-            Headline   => $Data[1],
-            Teaser     => $Data[2],
-            Body       => $Data[3],
-            CreateTime => $Data[4],
-            CreateBy   => $Data[5],
-            ValidID    => $Data[6],
-            Displays   => $Data[7],
+            NewsID           => $Data[0],
+            Headline         => $Data[1],
+            Teaser           => $Data[2],
+            Body             => $Data[3],
+            CreateTime       => $Data[4],
+            CreateBy         => $Data[5],
+            ValidID          => $Data[6],
+            Displays         => $Data[7],
+            InvalidateEpoche => $Data[8],
         );
     }
 
@@ -326,6 +332,25 @@ sub NewsList {
     }
 
     return %News;
+}
+
+sub InvalidateNews {
+    my ($Self, %Param) = @_;
+
+    my $DBObject   = $Kernel::OM->Get('Kernel::System::DB');
+    my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
+
+    my $Current = $TimeObject->SystemTime();
+
+    my $SQL = 'UPDATE product_news '
+        . ' SET valid_id = 2 '
+        . ' WHERE invalidate_epoche IS NOT NULL '
+        . '    AND invalidate_epoche < ?';
+
+    return $DBObject->Do(
+        SQL  => $SQL,
+        Bind => [ \$Current ],
+    );
 }
 
 1;

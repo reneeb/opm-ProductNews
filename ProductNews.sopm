@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.1">
     <Name>ProductNews</Name>
-    <Version>4.0.4</Version>
+    <Version>4.0.5</Version>
     <Vendor>Perl-Services.de</Vendor>
     <URL>http://perl-services.de.de/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A module that adds own product news to OTRS.</Description>
     <Description Lang="de">Ein Modul, mit dem eigene Produktneuigkeiten in OTRS gepflegt werden können.</Description>
     <Framework>4.0.x</Framework>
-    
-    
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/ProductNews.xml" />
         <File Permission="644" Location="Kernel/Language/de_ProductNews.pm" />
@@ -24,7 +22,9 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DashboardProductNews.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Standard/ProductNewsSnippet.tt" />
         <File Permission="644" Location="Kernel/System/ProductNews.pm" />
+        <File Permission="644" Location="bin/ps.ProductNews.pl" />
         <File Permission="644" Location="doc/en/ProductNews.pod" />
+        <File Permission="644" Location="var/cron/product_news.dist" />
         <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js"/>
     </Filelist>
     <DatabaseInstall Type="post">
@@ -34,6 +34,7 @@
             <Column Name="teaser" Required="true" Size="250" Type="VARCHAR"/>
             <Column Name="body" Required="true" Size="3000" Type="VARCHAR"/>
             <Column Name="displays" Required="false" Size="3000" Type="VARCHAR"/>
+            <Column Name="invalidate_epoche" Required="false" Type="INTEGER"/>
             <Column Name="valid_id" Required="true" Type="SMALLINT"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
@@ -54,6 +55,9 @@
     <DatabaseUpgrade Type="post">
         <TableAlter Name="product_news" Version="4.0.2">
             <ColumnAdd Name="displays" Required="false" Size="3000" Type="VARCHAR"/>
+        </TableAlter>
+        <TableAlter Name="product_news" Version="4.0.5">
+            <ColumnAdd Name="invalidate_epoche" Required="false" Type="INTEGER"/>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="post">
