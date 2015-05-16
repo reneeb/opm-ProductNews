@@ -42,3 +42,12 @@
 [% RenderBlockEnd("News") %]
     </tbody>
 </table>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    var NewsToOpen = '[% Data.NewsIDToOpen %]';
+
+    if ( NewsToOpen ) {
+        Core.UI.Dialog.DynamicContentDialog('AgentProductNews', '[% Data.NewsIDToOpen | uri %]', 'ContentOnly', '[% Translate("News Item") | html %]');
+    }
+//]]></script>
+[% END %]

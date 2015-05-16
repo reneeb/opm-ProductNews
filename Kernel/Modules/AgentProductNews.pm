@@ -66,6 +66,13 @@ sub Run {
         $News{Body} .= '&nbsp;' x $Whitespaces;
     }
 
+    if ( $News{OpenNews} ) {
+        $LayoutObject->Block(
+            Name => 'OpenNews',
+            Data => \%News,
+        );
+    }
+
     my $Content = $LayoutObject->Output(
         TemplateFile => 'AgentProductNews',
         Data         => \%News,

@@ -41,7 +41,7 @@ sub Run {
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
     my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
 
-    my @Params = (qw(NewsID ID));
+    my @Params = (qw(NewsID ID Mode));
 
     my %GetParam;
     for my $ParamName (@Params) {
@@ -50,6 +50,12 @@ sub Run {
 
     my $GlobalMarkRead = $ConfigObject->Get('ProductNews::GlobalMarkRead');
     my %News           = $NewsObject->NewsGet( NewsID => $GetParam{ID} || $GetParam{NewsID});
+    my $PrefKey        = 'ProductNewsRead';
+
+    if ( $GetParam{Mode} && $GetParam{Mode} eq 'ReadAutoOpen' ) {
+        $PrefKey        = 'ProductNewsAutoOpenRead';
+        $GlobalMarkRead = 0;
+    }
 
     if ( $GlobalMarkRead ) {
         $NewsObject->NewsUpdate(
@@ -64,7 +70,7 @@ sub Run {
         );
 
         my %AllNews      = $NewsObject->NewsList( Valid => 0 );
-        my %UserReadNews = map{ $_ => 1 } split /;/, $Preferences{ProductNewsRead} || '';
+        my %UserReadNews = map{ $_ => 1 } split /;/, $Preferences{$PrefKey} || '';
 
         my $NewsID = $GetParam{ID} || $GetParam{NewsID};
         $UserReadNews{$NewsID} = 1;
@@ -74,7 +80,7 @@ sub Run {
         }
 
         $UserObject->SetPreferences(
-            Key    => 'ProductNewsRead',
+            Key    => $PrefKey,
             Value  => join( ';', keys %UserReadNews ),
             UserID => $Self->{UserID},
         );

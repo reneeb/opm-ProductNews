@@ -57,5 +57,20 @@ Core.UI.Dialog = (function (TargetNS) {
         );
     };
 
+    TargetNS.NewsAutoOpenRead = function(ID) {
+        var Data = {
+            Action: 'AgentProductNewsMarkRead',
+            ID: ID,
+            Mode: 'ReadAutoOpen'
+        };
+
+        Core.AJAX.FunctionCall(
+            Core.Config.Get('CGIHandle'),
+            Data,
+            function() {},
+            'json'
+        );
+    };
+
     return TargetNS;
 }(Core.UI.Dialog || {}));

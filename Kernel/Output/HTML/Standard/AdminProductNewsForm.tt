@@ -106,6 +106,14 @@
                         </div>
                         <div class="Clear"></div>
 
+                        <label for="OpenNews">
+                            [% Translate("Open news when user visits dashboard") | html %]:
+                        </label>
+                        <div class="Field">
+                            <input type="checkbox" name="OpenNews" value="1" [% Data.OpenNewsChecked %] />
+                        </div>
+                        <div class="Clear"></div>
+
                         <label for="ValidID" class="Mandatory">
                             <span class="Marker">*</span>
                             [% Translate("Valid") | html %]:

@@ -47,7 +47,7 @@ sub Run {
     my @Params = (qw(
         NewsID Headline Teaser Body ValidID UserID RedirectAction
         InvalidateYear InvalidateMonth InvalidateDay InvalidateHour
-        InvalidateMinute InvalidateUsed
+        InvalidateMinute InvalidateUsed OpenNews
     ));
     my %GetParam;
     for (@Params) {
@@ -179,7 +179,7 @@ sub Run {
     }
 
     # ------------------------------------------------------------ #
-    # insert invoice state
+    # insert news item
     # ------------------------------------------------------------ #
     elsif ( $Self->{Subaction} eq 'Save' ) {
 
@@ -319,6 +319,8 @@ sub _MaskNewsForm {
         InvalidateUsed     => $Param{InvalidateUsed},
         InvalidateOptional => 1,
     );
+
+    $Param{OpenNewsChecked} = 'checked="checked"' if $Param{OpenNews};
 
     if ( $Self->{Subaction} ne 'Edit' && $Self->{Subaction} ne 'Add' ) {
 

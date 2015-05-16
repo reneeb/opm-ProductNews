@@ -39,6 +39,10 @@ sub Data {
     $Lang->{"We are sorry, you do not have permissions to edit this news item."} =
         'Sie haben keine Berechtigung diesen News-Eintrag zu bearbeiten';
 
+    $Lang->{"Invalidate date"} = 'Nachricht gültig bis';
+    $Lang->{'Open news when user visits dashboard'} = 'Nachricht öffnen wenn Agenten das Dashboard öffnen';
+    $Lang->{'Mark as read'}                         = 'Als gelesen markieren';
+
     return 1;
 }
 

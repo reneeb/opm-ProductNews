@@ -1,6 +1,6 @@
 # --
 # Kernel/System/ProductNews.pm - All News related functions should be here eventually
-# Copyright (C) 2011-2014 Perl-Services.de, http://perl-services.de/
+# Copyright (C) 2011-2015 Perl-Services.de, http://perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -81,12 +81,16 @@ sub NewsAdd {
         }
     }
 
+    $Param{ValidID}          ||= 0;
+    $Param{InvalidateEpoche} ||= 0;
+    $Param{OpenNews}         ||= 0;
+
     # insert new news
     return if !$DBObject->Do(
         SQL => 'INSERT INTO product_news '
             . '(headline, teaser, body, create_time, create_by, valid_id, '
-            . ' change_time, change_by, displays, invalidate_epoche) '
-            . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?, ?, ?)',
+            . ' change_time, change_by, displays, invalidate_epoche, open_news) '
+            . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?, ?, ?, ?)',
         Bind => [
             \$Param{Headline},
             \$Param{Teaser},
@@ -96,6 +100,7 @@ sub NewsAdd {
             \$Param{UserID},
             \$Param{Displays},
             \$Param{InvalidateEpoche},
+            \$Param{OpenNews},
         ],
     );
 
@@ -154,11 +159,15 @@ sub NewsUpdate {
         }
     }
 
+    $Param{ValidID}          ||= 0;
+    $Param{InvalidateEpoche} ||= 0;
+    $Param{OpenNews}         ||= 0;
+
     # insert new news
     return if !$DBObject->Do(
         SQL => 'UPDATE product_news SET headline = ?, teaser = ?, body = ?, '
             . 'valid_id = ?, change_time = current_timestamp, change_by = ?, '
-            . 'displays = ?, invalidate_epoche = ? '
+            . 'displays = ?, invalidate_epoche = ?, open_news = ? '
             . 'WHERE id = ?',
         Bind => [
             \$Param{Headline},
@@ -168,6 +177,7 @@ sub NewsUpdate {
             \$Param{UserID},
             \$Param{Displays},
             \$Param{InvalidateEpoche},
+            \$Param{OpenNews},
             \$Param{NewsID},
         ],
     );
@@ -215,7 +225,7 @@ sub NewsGet {
     # sql
     return if !$DBObject->Prepare(
         SQL => 'SELECT id, headline, teaser, body, create_time, create_by, '
-            . '     valid_id, displays, invalidate_epoche '
+            . '     valid_id, displays, invalidate_epoche, open_news '
             . 'FROM product_news WHERE id = ?',
         Bind  => [ \$Param{NewsID} ],
         Limit => 1,
@@ -233,6 +243,7 @@ sub NewsGet {
             ValidID          => $Data[6],
             Displays         => $Data[7],
             InvalidateEpoche => $Data[8],
+            OpenNews         => $Data[9],
         );
     }
 

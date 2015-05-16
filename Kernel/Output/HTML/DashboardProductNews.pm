@@ -82,13 +82,25 @@ sub Run {
         Display => 'Dashboard',
     );
 
+    my $OpenNewsID;
+
+    my %UserPrefs = $UserObject->GetPreferences(
+        UserID => $Self->{UserID},
+    );
+
+    my %UserReadNews = map{ $_ => 1 } split /;/, $UserPrefs{'ProductNewsAutoOpenRead'} || '';
+
     # show messages
-    for my $NewsID ( keys %ProductNews ) {
+    for my $NewsID ( sort{ $b <=> $a }keys %ProductNews ) {
 
         # get news data
         my %NewsInfo = $NewsObject->NewsGet(
             NewsID => $NewsID,
         );
+
+        if ( $NewsInfo{OpenNews} && !$OpenNewsID && !$UserReadNews{$NewsID} ) {
+            $OpenNewsID = $NewsID;
+        }
 
         # get user information
         my %UserInformation = $UserObject->GetUserData(
@@ -139,6 +151,7 @@ sub Run {
             TemplateFile => 'DashboardProductNews',
             Data         => {
                 %{ $Self->{Config} },
+                NewsIDToOpen => $OpenNewsID,
             },
         );
     }

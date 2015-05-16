@@ -24,6 +24,10 @@
         <p>
             [% Data.Body %]
         </p>
+[% RenderBlockStart("OpenNews") %]
+        <br /><br /><br />
+        <button class="Primary CallForAction" onclick="Core.UI.Dialog.NewsAutoOpenRead([% Data.NewsID %]); Core.UI.Dialog.CloseDialog($(this));" value="[% Translate("Mark as read") | html %]"><span>[% Translate("Mark as read") | html %]</span></button>
+[% RenderBlockEnd("OpenNews") %]
 
     </div>
     <div class="Clear"></div>

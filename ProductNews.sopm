@@ -35,6 +35,7 @@
             <Column Name="body" Required="true" Size="3000" Type="VARCHAR"/>
             <Column Name="displays" Required="false" Size="3000" Type="VARCHAR"/>
             <Column Name="invalidate_epoche" Required="false" Type="INTEGER"/>
+            <Column Name="open_news" Required="false" Type="SMALLINT"/>
             <Column Name="valid_id" Required="true" Type="SMALLINT"/>
             <Column Name="create_time" Required="true" Type="DATE"/>
             <Column Name="create_by" Required="true" Type="INTEGER"/>
@@ -58,6 +59,9 @@
         </TableAlter>
         <TableAlter Name="product_news" Version="4.0.5">
             <ColumnAdd Name="invalidate_epoche" Required="false" Type="INTEGER"/>
+        </TableAlter>
+        <TableAlter Name="product_news" Version="4.0.6">
+            <ColumnAdd Name="open_news" Required="false" Type="SMALLINT"/>
         </TableAlter>
     </DatabaseUpgrade>
     <DatabaseUninstall Type="post">
