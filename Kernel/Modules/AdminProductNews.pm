@@ -22,6 +22,7 @@ our @ObjectDependencies = qw(
     Kernel::System::Time
     Kernel::System::Web::Request
     Kernel::Output::HTML::Layout
+    Kernel::Language
 );
 
 sub new {
@@ -37,12 +38,13 @@ sub new {
 sub Run {
     my ( $Self, %Param ) = @_;
 
-    my $ParamObject  = $Kernel::OM->Get('Kernel::System::Web::Request');
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
-    my $ValidObject  = $Kernel::OM->Get('Kernel::System::Valid');
-    my $JSONObject   = $Kernel::OM->Get('Kernel::System::JSON');
-    my $TimeObject   = $Kernel::OM->Get('Kernel::System::Time');
+    my $ParamObject    = $Kernel::OM->Get('Kernel::System::Web::Request');
+    my $LayoutObject   = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $NewsObject     = $Kernel::OM->Get('Kernel::System::ProductNews');
+    my $ValidObject    = $Kernel::OM->Get('Kernel::System::Valid');
+    my $JSONObject     = $Kernel::OM->Get('Kernel::System::JSON');
+    my $TimeObject     = $Kernel::OM->Get('Kernel::System::Time');
+    my $LanguageObject = $Kernel::OM->Get('Kernel::Language');
 
     my @Params = (qw(
         NewsID Headline Teaser Body ValidID UserID RedirectAction
@@ -87,11 +89,11 @@ sub Run {
     if ( $Self->{Subaction} && $GetParam{NewsID} ) {
         my %News = $NewsObject->NewsGet( NewsID => $GetParam{NewsID} );
         if ( !( $IsAdmin || $News{CreateBy} == $Self->{UserID} ) ) {
-            my $TranslatableMessage = $Self->{LayoutObject}->{LanguageObject}->Translate(
+            my $TranslatableMessage = $LanguageObject->Translate(
                 "We are sorry, you do not have permissions to edit this news item."
             );
     
-            return $Self->{LayoutObject}->NoPermission(
+            return $LayoutObject->NoPermission(
                 Message    => $TranslatableMessage,
                 WithHeader => 'yes',
             );
@@ -125,7 +127,7 @@ sub Run {
     elsif ( $Self->{Subaction} eq 'Update' ) {
 
         # challenge token check for write action
-        $Self->{LayoutObject}->ChallengeTokenCheck();
+        $LayoutObject->ChallengeTokenCheck();
  
         # server side validation
         my %Errors;

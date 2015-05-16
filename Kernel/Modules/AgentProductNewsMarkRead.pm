@@ -45,7 +45,7 @@ sub Run {
 
     my %GetParam;
     for my $ParamName (@Params) {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName ) || '';
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName ) || '';
     }
 
     my $GlobalMarkRead = $ConfigObject->Get('ProductNews::GlobalMarkRead');

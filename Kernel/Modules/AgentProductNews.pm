@@ -16,9 +16,8 @@ our @ObjectDependencies = qw(
     Kernel::System::ProductNews
     Kernel::System::HTMLUtils
     Kernel::System::Web::Request
+    Kernel::Output::HTML::Layout
 );
-
-our $VERSION = 0.01;
 
 sub new {
     my ( $Type, %Param ) = @_;
@@ -42,7 +41,7 @@ sub Run {
 
     my %GetParam;
     for my $ParamName (@Params) {
-        $GetParam{$ParamName} = $Self->{ParamObject}->GetParam( Param => $ParamName ) || '';
+        $GetParam{$ParamName} = $ParamObject->GetParam( Param => $ParamName ) || '';
     }
 
     my %News = $NewsObject->NewsGet( NewsID => $GetParam{ID} || $GetParam{NewsID});
