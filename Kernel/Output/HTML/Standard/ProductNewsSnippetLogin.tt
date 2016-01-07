@@ -1,0 +1,109 @@
+# --
+# ProductNewsSnippet.tt - provides HTML for ProductNews.pm
+# Copyright (C) 2015 Perl-Services.de, http://www.perl-services.de 
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div id="ProductNewsX">
+   <div class="Header">
+     <h2>[% Translate("News") %]</h2>
+   </div>
+   <div id="ALLNEWS" class="PNXContent">
+
+<table class="PNXDataTable">
+    <tbody>
+[% RenderBlockStart("News") %]
+        <tr >
+            <td>
+                <a href="#" class="clickProductNewsX_[% Data.NewsID | html %]" title="[% Translate(Data.Teaser) | html %]" >
+                [% Translate(Data.Headline, "100") | html %]
+                </a>
+            </td>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    
+    $('.clickProductNewsX_[% Data.NewsID | html %]').bind('click',function() {
+        $('#ProductNewsXExtended_[% Data.NewsID | html %]').removeClass('Hidden');
+        $('<div id="Overlay" tabindex="-1">').appendTo('body');
+        $('body').css({'overflow': 'hidden'});
+        $('#Overlay').height($(document).height()).css('top', 0);
+        return false;    
+    });
+    
+//]]></script>
+[% END %]
+[% RenderBlockStart("Teaser") %]
+            <td>
+                <a href="#" class="clickProductNewsX_[% Data.NewsID | html %]">
+                [% Data.Teaser %]
+                </a>
+            </td>
+[% RenderBlockEnd("Teaser") %]
+[% RenderBlockStart("CreateByInformation") %]
+            <td>
+                [% Translate("created by") | html %]: [% Data.UserLastname %] [% Data.UserFirstname %] ([% Data.UserLogin %])
+            </td>
+[% RenderBlockEnd("CreateByInformation") %]
+        </tr>
+
+[% RenderBlockStart("NewsContent") %]
+<div id="ProductNewsXExtended_[% Data.NewsID | html %]" style="top: 20px; left: 703px;" role="dialog" class="PNXDialog Modal ui-draggable Hidden">
+    <div class="Header ui-draggable-handle">
+        <a class="Close" title="Close this dialog" href="#">
+            <i class="fa fa-times"></i>
+        </a>
+        <h1>[% Translate(Data.Headline, "100") | html %]</h1>
+    </div>
+    <div class="PNXContent">
+#        <div style="max-height: 200px;" class="InnerContent">
+        <div class="InnerContent">
+            <div class="MainBox ARIARoleMain">
+                <div class="ClearLeft"></div>
+                <div class="Headline">
+                    <div class="AdditionalInformation">
+                       [% Data.CreateTime | html %]
+                    </div>
+                </div>
+                <div class="ContentColumn">
+#                    <div class="ActionRow">
+                    <div>
+                        <h3>[% Data.Teaser %]</h3>
+                    </div>
+                    <p style="margin: 13px 0px 5px;">
+                        [% Data.Body %]                                                                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </p>
+                </div>
+                <div class="Clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+[% RenderBlockEnd("NewsContent") %]
+
+[% RenderBlockEnd("News") %]
+   </tbody>
+</table>
+
+   </div>
+</div>
+<div class="Clear"></div>
+
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+    
+    $('.Close').bind('click',function() {
+        $(this).parent().parent().addClass('Hidden');
+        $('#Overlay').remove();
+        $('body').css({
+            'overflow': 'auto'
+        });
+        $('body').css('min-height', 'auto');        
+        return false;    
+    });
+    
+//]]></script>
+[% END %]
