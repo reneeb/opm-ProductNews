@@ -26,10 +26,20 @@
 <script type="text/javascript">//<![CDATA[
     
     $('.clickProductNewsX_[% Data.NewsID | html %]').bind('click',function() {
-        $('#ProductNewsXExtended_[% Data.NewsID | html %]').removeClass('Hidden');
-        $('<div id="Overlay" tabindex="-1">').appendTo('body');
+        $('<div id="PNXOverlay" tabindex="-1"><div role="dialog" class="PNXDialog Modal"></div></div>').appendTo('body');
+        $('.PNXDialog').append($('#ProductNewsXExtended_[% Data.NewsID | html %]').html());
         $('body').css({'overflow': 'hidden'});
-        $('#Overlay').height($(document).height()).css('top', 0);
+        $('#PNXOverlay').height($(document).height()).css('top', 0);
+
+        $('.Close').bind('click',function() {
+            $('#PNXOverlay').remove();
+            $('body').css({
+                'overflow': 'auto'
+            });
+            $('body').css('min-height', 'auto');        
+            return false;    
+        });
+
         return false;    
     });
     
@@ -50,15 +60,14 @@
         </tr>
 
 [% RenderBlockStart("NewsContent") %]
-<div id="ProductNewsXExtended_[% Data.NewsID | html %]" style="top: 20px; left: 703px;" role="dialog" class="PNXDialog Modal ui-draggable Hidden">
-    <div class="Header ui-draggable-handle">
+<div id="ProductNewsXExtended_[% Data.NewsID | html %]" class="Hidden">
+    <div class="Header">
         <a class="Close" title="Close this dialog" href="#">
             <i class="fa fa-times"></i>
         </a>
         <h1>[% Translate(Data.Headline, "100") | html %]</h1>
     </div>
     <div class="PNXContent">
-#        <div style="max-height: 200px;" class="InnerContent">
         <div class="InnerContent">
             <div class="MainBox ARIARoleMain">
                 <div class="ClearLeft"></div>
@@ -67,12 +76,11 @@
                        [% Data.CreateTime | html %]
                     </div>
                 </div>
-                <div class="ContentColumn">
-#                    <div class="ActionRow">
-                    <div>
+                <div>
+                    <div class="ContentColumnTeaser">
                         <h3>[% Data.Teaser %]</h3>
                     </div>
-                    <p style="margin: 13px 0px 5px;">
+                    <p class="ContentColumnBody" >
                         [% Data.Body %]                                                                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </p>
                 </div>
@@ -81,7 +89,6 @@
         </div>
     </div>
 </div>
-
 [% RenderBlockEnd("NewsContent") %]
 
 [% RenderBlockEnd("News") %]
@@ -91,19 +98,3 @@
    </div>
 </div>
 <div class="Clear"></div>
-
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    
-    $('.Close').bind('click',function() {
-        $(this).parent().parent().addClass('Hidden');
-        $('#Overlay').remove();
-        $('body').css({
-            'overflow': 'auto'
-        });
-        $('body').css('min-height', 'auto');        
-        return false;    
-    });
-    
-//]]></script>
-[% END %]
