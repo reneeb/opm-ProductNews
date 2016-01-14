@@ -14,7 +14,9 @@
            <i class="fa fa-caret-right"></i><i class="fa fa-caret-down"></i>
        </a>
      </div>
-     <h2>[% Translate("All News") %]</h2>
+[% RenderBlockStart("WidgetHeader") %]
+     <h2>[% Translate(Data.WidgetHeader, "100") %]</h2>
+[% RenderBlockEnd("WidgetHeader") %]
    </div>
    <div id="ALLNEWS" class="Content">
 

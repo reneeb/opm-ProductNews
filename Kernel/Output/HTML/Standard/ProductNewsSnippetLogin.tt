@@ -9,7 +9,9 @@
 
 <div id="ProductNewsX">
    <div class="Header">
-     <h2>[% Translate("News") %]</h2>
+[% RenderBlockStart("WidgetHeader") %]
+     <h2>[% Translate(Data.WidgetHeader, "100") %]</h2>
+[% RenderBlockEnd("WidgetHeader") %]
    </div>
    <div id="ALLNEWS" class="PNXContent">
 

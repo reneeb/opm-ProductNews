@@ -63,6 +63,14 @@ sub Run {
 
     my $ShowTeaserWidget    = $ConfigObject->Get('ProductNews::ShowTeaserWidget') || 0;
     my $ShowCreatedByWidget = $ConfigObject->Get('ProductNews::ShowCreatedByWidget') || 0;
+    my $WidgetHeader        = $ConfigObject->Get('ProductNews::WidgetHeader') || 'Product News';
+
+    $LayoutObject->Block(
+        Name => 'WidgetHeader',
+        Data => {
+            WidgetHeader => $WidgetHeader,
+        },
+    );
 
     NEWSID:
     for my $NewsID ( sort keys %ProductNews ) {
