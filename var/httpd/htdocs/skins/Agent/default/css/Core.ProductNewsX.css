@@ -1,0 +1,194 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Tables
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsection  General stuff
+ */
+#ProductNewsX {
+    padding-bottom: 25px;
+}
+
+#ALLNEWS {
+    margin-left: 0px;
+}
+
+#PNXOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 200;
+}
+
+/**
+ * @subsection  Standard DataTable
+ */
+.PNXDataTable {
+    width: 100%;
+    background-color: #FDFDFD;
+    border: 1px solid #ddd;
+    clear: both;
+    border-collapse: separate;
+}
+
+.PNXDataTable tbody td {
+    padding: 0 10px;
+    border-right: 1px dotted #CCC;
+}
+
+.PNXDataTable tbody tr:hover td {
+    border-right-color: #fff;
+}
+
+.PNXDataTable tbody td.Last {
+    border-right: none;
+}
+
+.PNXDataTable tbody td:last-child {
+    border-right: none;
+}
+
+.PNXDataTable tr td {
+    line-height: 20px;
+}
+
+.PNXDataTable tr:first td {
+    border-top: 1px solid #EEE;
+}
+
+.PNXDataTable tr td.Highlight {
+    background-color: #EEE;
+}
+
+.PNXDataTable tr.Even td {
+    background-color: #F5F5F5;
+}
+
+.PNXDataTable tr:nth-child(even) td {
+    background-color: #F5F5F5;
+}
+
+.PNXDataTable tr.Even td.Highlight {
+    background-color: #E5E5E5;
+}
+
+.PNXDataTable tr:nth-child(even) td.Highlight {
+    background-color: #E5E5E5;
+}
+
+.PNXDataTable tr:hover td a {
+    color: #000;
+}
+
+.PNXDataTable td:first-child input {
+    margin: 0;
+}
+
+/**
+ * @subsection  Dialog
+ */
+.PNXDialog {
+    margin: auto;
+    top: 50px;
+    position: relative;
+    z-index: 99999;
+    min-width: 150px;
+    width: 80%;
+    background: #FFF;
+    border: 1px solid #C0C0C0;
+}
+
+.PNXDialog > .Header {
+    cursor: move;
+    display: block;
+    position: relative;
+    background: #ddd;
+    border-bottom: 1px solid #CCC;
+    height: 25px;
+}
+
+.PNXDialog > .Header .Close {
+    display: block;
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    right: 8px;
+    top: 50%;
+    margin-top: -6px;
+    color: #000;
+}
+
+.PNXDialog > .Header h1 {
+    padding: 5px 10px;
+    font-weight: normal;
+    font-size: 16px;
+    margin: 0px 0px 15px 0px;
+}
+
+.PNXDialog > .PNXContent {
+    overflow: hidden;
+    padding: 5px;
+}
+
+.PNXDialog > .PNXContent > .InnerContent {
+    padding: 10px;
+    background: #FFF;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.ContentColumnTeaser h3 {
+    font-size: 14px;    
+}
+
+.ContentColumnBody {
+    margin: 13px 0px 5px;
+    font-size: 12px;    
+}
+
+/**
+ * @subsection  Headline
+ */
+div.Headline {
+    height: 24px;
+    margin: 15px 0px 5px 0px;
+    position: relative;
+}
+
+div.Headline h1 {
+    font-size: 15px;
+    line-height: 24px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.Headline h1 span {
+    padding: 0 3px;
+}
+
+/**
+ * @subsection  Control Row Additional Information
+ */
+
+.AdditionalInformation {
+    right: 7px;
+    top: 7px;
+    font-size: 11px;
+    position: absolute;
+}
+
+} /* end @media */

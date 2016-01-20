@@ -52,7 +52,7 @@ sub Run {
     my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
-    my $UserID      = $LayoutObject->{UserID};
+    my $UserID      = $LayoutObject->{UserID} || 1;
     my %Preferences = $UserObject->GetPreferences(
         UserID => $UserID,
     );
@@ -63,6 +63,14 @@ sub Run {
 
     my $ShowTeaserWidget    = $ConfigObject->Get('ProductNews::ShowTeaserWidget') || 0;
     my $ShowCreatedByWidget = $ConfigObject->Get('ProductNews::ShowCreatedByWidget') || 0;
+    my $WidgetHeader        = $ConfigObject->Get('ProductNews::WidgetHeader') || 'Product News';
+
+    $LayoutObject->Block(
+        Name => 'WidgetHeader',
+        Data => {
+            WidgetHeader => $WidgetHeader,
+        },
+    );
 
     NEWSID:
     for my $NewsID ( sort keys %ProductNews ) {
@@ -74,11 +82,27 @@ sub Run {
         my %News = $PNObject->NewsGet(
             NewsID => $NewsID,
         );
-
+      
+        # for using without JS-Dialog
+        $News{Body} = $LayoutObject->Ascii2Html(Text => $News{Body},HTMLResultMode  => 1,);
+        
         $LayoutObject->Block(
             Name => 'News',
             Data => \%News,
         );
+
+        if ($Template =~ /Login/) {
+            my %UserInformation = $UserObject->GetUserData(
+                UserID => $News{CreateBy},
+            );
+            $LayoutObject->Block(
+                Name => 'NewsContent',
+                Data => {
+                    %UserInformation,
+                    %News,
+                },
+            );
+        }
 
         if( $ShowTeaserWidget ) {
             $LayoutObject->Block(
@@ -105,36 +129,73 @@ sub Run {
 
     return 1 if !$NewsShown;
 
-    my $Snippet = $LayoutObject->Output(
-        TemplateFile => 'ProductNewsSnippet',
-    );
+    if ($Template eq 'CustomerLogin') {
+        my $Snippet = $LayoutObject->Output(
+            TemplateFile => 'ProductNewsSnippetLogin',
+        );
+        ${ $Param{Data} } =~ s{ 
+            <div \s+ id="SlideArea"> \K 
+        }{ 
+            $Snippet 
+        }xms;
 
-    ${ $Param{Data} } =~ s{
-        <div \s+ class="SidebarColumn"> \K
-    }{
-        $Snippet
-    }xms;
+    }
+    elsif ($Template eq 'Login') {
+        my $Snippet = $LayoutObject->Output(
+            TemplateFile => 'ProductNewsSnippetLogin',
+        );
+        ${ $Param{Data} } =~ s{ 
+            (<div \s+ id="LoginBox">)
+        }{ 
+            $Snippet $1 
+        }xms;
+    }
+    elsif ($Template =~ /^CustomerTicket/) {
+        my $Snippet = $LayoutObject->Output(
+            TemplateFile => 'ProductNewsSnippet',
+        );
 
-    my $JS = sprintf q~
-        $('span[id^="mark_as_read_"]').bind( 'click', function() {
-            var link    = $(this);
-            var news_id = link.attr('id').replace('mark_as_read_', '');
+        my $CustomerLoginStyle = ' style="margin: 13px;" ';
+        $Snippet =~ s{(<div \s+ class="WidgetSimple")(>)}{$1$CustomerLoginStyle$2}xism;
+        $Snippet =~ s{<div \s+ class="WidgetAction \s+ Toggle">.*?</div>}{}xism;
+        $Snippet =~ s{<span \s+ id="mark_as_read_.*?</span>}{}gxism;
+        my $MatchString = '(<div.*?class=.*?TicketView)';
+        ${ $Param{Data} } =~ s{ $MatchString }{ $Snippet $1}xism;
+    }
+    else {
+        my $Snippet = $LayoutObject->Output(
+            TemplateFile => 'ProductNewsSnippet',
+        );
+        ${ $Param{Data} } =~ s{
+            <div \s+ class="SidebarColumn"> \K
+        }{
+            $Snippet
+        }xms;
+    }
 
-            $.ajax({
-                type: "POST",
-                url:  '%s',
-                data : {
-                    Action: 'AgentProductNewsMarkRead',
-                    NewsID: news_id
-                },
-                success : function() {
-                    link.closest('tr').remove();
-                }
+    if ($Template =~ /^Agent/) {
+        my $JS = sprintf q~
+            $('span[id^="mark_as_read_"]').bind( 'click', function() {
+                var link    = $(this);
+                var news_id = link.attr('id').replace('mark_as_read_', '');
+
+                $.ajax({
+                    type: "POST",
+                    url:  '%s',
+                    data : {
+                        Action: 'AgentProductNewsMarkRead',
+                        NewsID: news_id
+                    },
+                    success : function() {
+                        link.closest('tr').remove();
+                    }
+                });
             });
-        });
-    ~, $LayoutObject->{EnvRef}->{Baselink};
+        ~, $LayoutObject->{EnvRef}->{Baselink};
 
-    ${ $Param{Data} } =~ s{\z}{[% WRAPPER JSOnDocumentComplete %]\n$JS\n[% END %]}
+
+        ${ $Param{Data} } =~ s{\z}{[% WRAPPER JSOnDocumentComplete %]\n$JS\n[% END %]};
+    }
 }
 
 1;

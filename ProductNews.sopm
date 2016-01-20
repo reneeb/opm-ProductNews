@@ -21,11 +21,14 @@
         <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentProductNews.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Standard/DashboardProductNews.tt" />
         <File Permission="644" Location="Kernel/Output/HTML/Standard/ProductNewsSnippet.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Standard/ProductNewsSnippetLogin.tt"/>
         <File Permission="644" Location="Kernel/System/ProductNews.pm" />
         <File Permission="644" Location="bin/ps.ProductNews.pl" />
         <File Permission="644" Location="doc/en/ProductNews.pod" />
         <File Permission="644" Location="var/cron/product_news.dist" />
         <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.ProductNewsX.css"/>
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.ProductNewsX.css"/>
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="product_news">

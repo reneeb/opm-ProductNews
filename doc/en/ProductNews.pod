@@ -25,6 +25,10 @@ Torsten Thau, c.a.p.e IT (L<http://cape-it.de>)
  * Made it ready for OTRS 3.3
  * Inlineediting
 
+Oberender Frank, c.a.p.e IT (L<http://cape-it.de>)
+
+ * visbility in Customer-Frontend and on Login-Screens
+
 =head1 AUTHOR AND LICENSE
 
 Renee Baecker, L<http://perl-services.de>
