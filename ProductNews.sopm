@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.1">
     <Name>ProductNews</Name>
-    <Version>4.0.7</Version>
+    <Version>5.0.1</Version>
     <Vendor>Perl-Services.de</Vendor>
     <URL>http://perl-services.de.de/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -14,18 +14,17 @@
         <File Permission="644" Location="Kernel/Modules/AdminProductNews.pm" />
         <File Permission="644" Location="Kernel/Modules/AgentProductNewsMarkRead.pm" />
         <File Permission="644" Location="Kernel/Modules/AgentProductNews.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/DashboardProductNews.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/OutputFilterProductNews.pm" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsList.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AdminProductNewsForm.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/AgentProductNews.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/DashboardProductNews.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/ProductNewsSnippet.tt" />
-        <File Permission="644" Location="Kernel/Output/HTML/Standard/ProductNewsSnippetLogin.tt"/>
+        <File Permission="644" Location="Kernel/Output/HTML/Dashboard/ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminProductNewsList.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminProductNewsForm.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentProductNews.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/DashboardProductNews.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ProductNewsSnippet.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ProductNewsSnippetLogin.tt"/>
         <File Permission="644" Location="Kernel/System/ProductNews.pm" />
-        <File Permission="755" Location="bin/ps.ProductNews.pl" />
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/ProductNews/Invalidate.pm" />
         <File Permission="644" Location="doc/en/ProductNews.pod" />
-        <File Permission="644" Location="var/cron/product_news.dist" />
         <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.ProductNewsX.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.ProductNewsX.css"/>
