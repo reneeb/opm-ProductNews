@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<otrs_config version="1.0" init="Application">
+<?xml version="1.0" encoding="utf-8"?>
+<otrs_config version="1.0" init="Config">
     <ConfigItem Name="Loader::Agent::CommonJS###090-ProductX" Required="1" Valid="1">
         <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
         <Group>ProductNews</Group>
@@ -42,7 +42,7 @@
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentProductNews" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the  agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration fÃ¼r das  Agenten Interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -55,7 +55,7 @@
     </ConfigItem>
     <ConfigItem Name="CustomerFrontend::Module###AgentProductNews" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the  agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration fÃ¼r das  Agenten Interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
         <Setting>
@@ -68,7 +68,7 @@
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentProductNewsMarkRead" Required="0" Valid="1">
         <Description Lang="en">Frontend module registration for the  agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>
+        <Description Lang="de">Frontendmodul-Registration fÃ¼r das  Agenten Interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
@@ -90,7 +90,7 @@
                 <Title>Product News</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
-                    <Module>Kernel::Output::HTML::NavBarModuleAdmin</Module>
+                    <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>
                     <Name Translatable="1">Product News</Name>
                     <Description Translatable="1">Create and manage news.</Description>
                     <Block>System</Block>
@@ -105,7 +105,7 @@
         <SubGroup>Frontend::Agent::Dashboard</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::DashboardProductNews</Item>
+                <Item Key="Module">Kernel::Output::HTML::Dashboard::ProductNews</Item>
                 <Item Key="Title">Product News</Item>
                 <Item Key="Description">News!</Item>
                 <Item Key="Block">ContentLarge</Item>
@@ -176,13 +176,13 @@
             <String Regex="">Product News</String>
         </Setting>
     </ConfigItem>
-    <ConfigItem Name="Frontend::Output::FilterElementPre###OutputFilterProductNews" Required="0" Valid="1">
+    <ConfigItem Name="Frontend::Output::FilterElementPost###OutputFilterProductNews" Required="0" Valid="1">
         <Description Translatable="1">Module to product news in sidebar.</Description>
         <Group>ProductNews</Group>
         <SubGroup>OutputFilter</SubGroup>
         <Setting>
             <Hash>
-                <Item Key="Module">Kernel::Output::HTML::OutputFilterProductNews</Item>
+                <Item Key="Module">Kernel::Output::HTML::FilterElementPost::ProductNews</Item>
                 <Item Key="Debug">0</Item>
                 <Item Key="Templates">
                     <Hash>
@@ -217,6 +217,24 @@
                 <Item Key="0">Disabled</Item>
                 <Item Key="1">Enabled</Item>
             </Option>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="Daemon::SchedulerCronTaskManager::Task###ProductNews" Required="0" Valid="1">
+        <Description Translatable="1">Invalidate product news.</Description>
+        <Group>Daemon</Group>
+        <SubGroup>Daemon::SchedulerCronTaskManager::Task</SubGroup>
+        <Setting>
+            <Hash>
+                <Item Key="TaskName">InvalidateProductNews</Item>
+                <Item Key="Schedule">*/5 * * * *</Item> <!-- default: every 10 minutes -->
+                <Item Key="Module">Kernel::System::Console::Command::Maint::ProductNews::Invalidate</Item>
+                <Item Key="Function">Execute</Item>
+                <Item Key="MaximumParallelInstances">1</Item>
+                <Item Key="Params">
+                    <Array>
+                    </Array>
+                </Item>
+            </Hash>
         </Setting>
     </ConfigItem>
 </otrs_config>

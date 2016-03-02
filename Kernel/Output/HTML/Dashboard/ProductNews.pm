@@ -1,13 +1,13 @@
 # --
-# Kernel/Output/HTML/DashboardProductNews.pm
-# Copyright (C) 2011-2014 Perl-Services.de, http://perl-services.de/
+# Kernel/Output/HTML/Dashboard/ProductNews.pm
+# Copyright (C) 2011-2016 Perl-Services.de, http://perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::DashboardProductNews;
+package Kernel::Output::HTML::Dashboard::ProductNews;
 
 use strict;
 use warnings;
@@ -17,8 +17,6 @@ our @ObjectDependencies = qw(
     Kernel::System::Group
     Kernel::System::User
 );
-
-our $VERSION = 0.02;
 
 sub new {
     my ( $Type, %Param ) = @_;

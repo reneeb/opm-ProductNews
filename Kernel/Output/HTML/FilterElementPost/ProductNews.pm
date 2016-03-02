@@ -1,13 +1,13 @@
 # --
-# Kernel/Output/HTML/OutputFilterProductNews.pm
-# Copyright (C) 2015 Perl-Services.de, http://www.perl-services.de/
+# Kernel/Output/HTML/FilterElementPost/ProductNews.pm
+# Copyright (C) 2016 Perl-Services.de, http://www.perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
 # did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
 # --
 
-package Kernel::Output::HTML::OutputFilterProductNews;
+package Kernel::Output::HTML::FilterElementPost::ProductNews;
 
 use strict;
 use warnings;
@@ -194,7 +194,8 @@ sub Run {
         ~, $LayoutObject->{EnvRef}->{Baselink};
 
 
-        ${ $Param{Data} } =~ s{\z}{[% WRAPPER JSOnDocumentComplete %]\n$JS\n[% END %]};
+        #${ $Param{Data} } =~ s{\z}{[% WRAPPER JSOnDocumentComplete %]\n$JS\n[% END %]};
+        $LayoutObject->AddJSOnDocumentComplete( Code => $JS );
     }
 }
 

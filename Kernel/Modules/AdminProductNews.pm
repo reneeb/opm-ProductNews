@@ -288,7 +288,7 @@ sub _MaskNewsForm {
         }
     }
 
-    my $OutputFilter = $ConfigObject->{'Frontend::Output::FilterElementPre'} || {};
+    my $OutputFilter = $ConfigObject->{'Frontend::Output::FilterElementPost'} || {};
     my $PNFilter     = $OutputFilter->{OutputFilterProductNews} ||{};
     my @Templates    = keys %{ $PNFilter->{Templates} || {} };
 
