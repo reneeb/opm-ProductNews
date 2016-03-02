@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.1">
     <Name>ProductNews</Name>
-    <Version>5.0.1</Version>
+    <Version>5.0.2</Version>
     <Vendor>Perl-Services.de</Vendor>
     <URL>http://perl-services.de.de/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Description Lang="en">A module that adds own product news to OTRS.</Description>
     <Description Lang="de">Ein Modul, mit dem eigene Produktneuigkeiten in OTRS gepflegt werden können.</Description>
-    <Framework>4.0.x</Framework>
+    <Framework>5.0.x</Framework>
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/ProductNews.xml" />
         <File Permission="644" Location="Kernel/Language/de_ProductNews.pm" />
