@@ -29,6 +29,10 @@ Oberender Frank, c.a.p.e IT (L<http://cape-it.de>)
 
  * visbility in Customer-Frontend and on Login-Screens
 
+Never Min, znuny (L<http://znuny.cn>)
+
+ * Chinese translation
+
 =head1 AUTHOR AND LICENSE
 
 Renee Baecker, L<http://perl-services.de>
