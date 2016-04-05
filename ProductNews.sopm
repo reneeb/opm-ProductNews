@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.1">
     <Name>ProductNews</Name>
-    <Version>5.0.2</Version>
+    <Version>5.0.3</Version>
     <Vendor>Perl-Services.de</Vendor>
     <URL>http://perl-services.de.de/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -11,6 +11,7 @@
     <Filelist>
         <File Permission="644" Location="Kernel/Config/Files/ProductNews.xml" />
         <File Permission="644" Location="Kernel/Language/de_ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Language/zh_CN_ProductNews.pm" />
         <File Permission="644" Location="Kernel/Modules/AdminProductNews.pm" />
         <File Permission="644" Location="Kernel/Modules/AgentProductNewsMarkRead.pm" />
         <File Permission="644" Location="Kernel/Modules/AgentProductNews.pm" />
