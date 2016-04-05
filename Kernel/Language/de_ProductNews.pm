@@ -30,7 +30,7 @@ sub Data {
     $Lang->{'Add/Change News'} = 'Nachricht hinzufügen/ändern';
     $Lang->{'News Management'} = 'Nachrichten verwalten';
     $Lang->{'edit'}            = 'bearbeiten';
-    $Lang->{'delete'}          = '';
+    $Lang->{'delete'}          = 'löschen';
     $Lang->{'created by'}      = 'erstellt von';
     $Lang->{'News Item'}       = 'News Beitrag';
 
