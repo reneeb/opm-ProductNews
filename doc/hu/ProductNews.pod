@@ -1,0 +1,57 @@
+=encoding utf-8
+
+=head1 NÉV
+
+ProductNews - Hírek megjelenítése a vezérlőpulton a termékkel kapcsolatban
+
+=head1 LEÍRÁS
+
+Ha hírei vannak a termékével kapcsolatban, vagy bármilyen egyéb üzenete lenne, 
+amelyről az OTRS rendszer összes ügyintézőjének tudnia kell, akkor ennek 
+kezeléséhez használhatja a termékhíreket.
+
+Ezzel a kiegészítővel egy új vezérlőpult felületi elem jön létre, és az 
+adminisztrátorok híreket adhatnak hozzá.
+
+A 4.0.4-es verzióhoz hasonlóan az összes felhasználó létrehozhat híreket, és az 
+adminisztrátor, valamint a hírek szerzője szerkesztheti azokat. Mostantól 
+lehetőség van a hírek megtekintésére más nézeteken is: AgentTicketZoom, 
+AgentTicketPhone, AgentTicketEmail.
+
+=head1 TÁROLÓ ÉS HIBAKÖVETŐ
+
+A kódtároló és a hibakövető a L<http://github.com/reneeb/otrs-ProductNews> 
+címen érhető el.
+
+=head1 HOZZÁJÁRULÓK
+
+Torsten Thau, c.a.p.e IT (L<http://cape-it.de>)
+
+ * Felkészítés az OTRS 3.3-hoz
+ * Sorközi szerkesztés
+
+Oberender Frank, c.a.p.e IT (L<http://cape-it.de>)
+
+ * Láthatóság az ügyfél előtétprogramján és a bejelentkező képernyőkön
+
+Never Min, znuny (L<http://znuny.cn>)
+
+ * Kínai fordítás
+
+Úr Balázs, OTRS-megoldások (L<http://www.otrs-megoldasok.hu>)
+
+ * Magyar fordítás
+
+=head1 SZERZŐ ÉS LICENC
+
+Renée Bäcker, L<http://perl-services.de>
+
+Ez a szoftver MINDENFÉLE GARANCIA NÉLKÜL érkezik. A részletekért és a 
+licencinformációkért (AGPL) nézze meg a mellékelt COPYING fájlt. Ha nem kapta 
+meg a fájlt, akkor olvassa el a L<http://www.gnu.org/licenses/agpl.txt> címen.
+
+=head1 MAGYAR FORDÍTÁS
+
+A magyar fordítást az OTRS-megoldások csapata készítette.
+Copyright (C) 2016 Úr Balázs, L<http://otrs-megoldasok.hu>
+

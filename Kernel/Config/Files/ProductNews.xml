@@ -11,7 +11,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Loader::Customer::CommonJS###090-ProductX" Required="1" Valid="1">
-        <Description Translatable="1">List of JS files to always be loaded for the agent interface.</Description>
+        <Description Translatable="1">List of JS files to always be loaded for the customer interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Core::Web</SubGroup>
         <Setting>
@@ -21,7 +21,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Loader::Agent::CommonCSS###090-ProductNewsX" Required="1" Valid="1">
-        <Description Translatable="1">List of CSS files to always be loaded for the customer interface.</Description>
+        <Description Translatable="1">List of CSS files to always be loaded for the agent interface.</Description>
         <Group>Framework</Group>
         <SubGroup>Core::Web</SubGroup>
         <Setting>
@@ -41,41 +41,38 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentProductNews" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the  agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description> Product News</Description>
+                <Description Translatable="1">Product News</Description>
                 <NavBarName></NavBarName>
-                <Title> Product News</Title>
+                <Title Translatable="1">Product News</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CustomerFrontend::Module###AgentProductNews" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the  agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description> Product News</Description>
+                <Description Translatable="1">Product News</Description>
                 <NavBarName></NavBarName>
-                <Title> Product News</Title>
+                <Title Translatable="1">Product News</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AgentProductNewsMarkRead" Required="0" Valid="1">
-        <Description Lang="en">Frontend module registration for the  agent interface.</Description>
-        <Description Lang="de">Frontendmodul-Registration für das  Agenten Interface.</Description>
+        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
-                <Description> Product News</Description>
+                <Description Translatable="1">Product News</Description>
                 <NavBarName></NavBarName>
-                <Title> Product News</Title>
+                <Title Translatable="1">Product News</Title>
             </FrontendModuleReg>
         </Setting>
     </ConfigItem>
@@ -86,7 +83,7 @@
         <Setting>
             <FrontendModuleReg>
                 <Group>admin</Group>
-                <Description>Create and manage news.</Description>
+                <Description Translatable="1">Create and manage news.</Description>
                 <Title>Product News</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
@@ -106,8 +103,8 @@
         <Setting>
             <Hash>
                 <Item Key="Module">Kernel::Output::HTML::Dashboard::ProductNews</Item>
-                <Item Key="Title">Product News</Item>
-                <Item Key="Description">News!</Item>
+                <Item Key="Title" Translatable="1">Product News</Item>
+                <Item Key="Description" Translatable="1">News!</Item>
                 <Item Key="Block">ContentLarge</Item>
                 <Item Key="Group">users</Item>
                 <Item Key="Default">1</Item>
@@ -122,8 +119,8 @@
         <SubGroup>Core::ProductNews</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -133,8 +130,8 @@
         <SubGroup>Core::ProductNews</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -144,8 +141,8 @@
         <SubGroup>Core::ProductNews</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -158,13 +155,13 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="ProductNews::GlobalMarkRead" Required="1" Valid="1">
-        <Description Translatable="1">If enabled, everybody kann set the message to "invalid" by clicking "mark as read".</Description>
+        <Description Translatable="1">If enabled, everybody can set the message to "invalid" by clicking "mark as read".</Description>
         <Group>ProductNews</Group>
         <SubGroup>Core::ProductNews</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -203,8 +200,8 @@
         <SubGroup>Core::ProductNews</SubGroup>
         <Setting>
             <Option SelectedID="1">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
@@ -214,8 +211,8 @@
         <SubGroup>Core::ProductNews</SubGroup>
         <Setting>
             <Option SelectedID="0">
-                <Item Key="0">Disabled</Item>
-                <Item Key="1">Enabled</Item>
+                <Item Key="0" Translatable="1">Disabled</Item>
+                <Item Key="1" Translatable="1">Enabled</Item>
             </Option>
         </Setting>
     </ConfigItem>
