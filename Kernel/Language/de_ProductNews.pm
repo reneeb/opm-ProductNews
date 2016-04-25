@@ -34,20 +34,20 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} =
         'Frontendmodul-Registration für das Agenten Interface.';
     $Lang->{'Product News'} = '';
-    $Lang->{'Frontend module registration for the invoice states interface.'} = '';
+    $Lang->{'Frontend module registration for the product news administration.'} = '';
     $Lang->{'Create and manage news.'} = 'Nachrichten erstellen und verwalten.';
     $Lang->{'Defines the parameters for the dashboard backend. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} = '';
-    $Lang->{'News!'} = '';
-    $Lang->{'Dis-/enables displaying the teaser text of a news entry.'} = '';
-    $Lang->{'Disabled'} = '';
-    $Lang->{'Enabled'} = '';
+    $Lang->{'News!'} = 'Nachrichten!';
+    $Lang->{'Dis-/enables displaying the teaser text of a news entry.'} = 'Schaltet die Anzeige des Teasertextes einer Neuigkeit an bzw. aus.';
+    $Lang->{'Disabled'} = 'Deaktiviert';
+    $Lang->{'Enabled'} = 'Aktiviert';
     $Lang->{'Dis-/enables displaying the creator of a news entry.'} = '';
     $Lang->{'Dis-/enables edit-/delete link in dashboard for creator and users of group defined in "ProductNews::DashboardEditDeleteGroup".'} = '';
     $Lang->{'Defines the group name to which the user must belong to see edit/delete link if not creator.'} = '';
     $Lang->{'If enabled, everybody can set the message to "invalid" by clicking "mark as read".'} = '';
-    $Lang->{'Configurable header for news widgets.'} = '';
-    $Lang->{'Module to product news in sidebar.'} = '';
-    $Lang->{'Invalidate product news.'} = '';
+    $Lang->{'Configurable header for news widgets.'} = 'Konfigurierbare Überschriften für News-Widget';
+    $Lang->{'Module to show product news in sidebar or Ticket zoom.'} = 'Modul zur Anzeige der Produktneuigkeiten in der Seitenleiste der Ticketansicht'; 
+    $Lang->{'Invalidate product news.'} = 'Setze Produktneuigkeit auf ungültig.';
 
     # Kernel/Modules/AdminProductNews.pm
     $Lang->{'We are sorry, you do not have permissions to edit this news item.'} =
@@ -55,23 +55,23 @@ sub Data {
 
     # Kernel/Output/HTML/Templates/Standard/AdminProductNewsForm.tt
     $Lang->{'News Management'} = 'Nachrichten verwalten';
-    $Lang->{'Actions'} = '';
-    $Lang->{'Go to overview'} = '';
+    $Lang->{'Actions'} = 'Aktionen';
+    $Lang->{'Go to overview'} = 'Zur Übersicht gehen';
     $Lang->{'Add/Change News'} = 'Nachricht hinzufügen/ändern';
     $Lang->{'Headline'} = 'Überschrift';
-    $Lang->{'A headline for the news is required.'} = '';
+    $Lang->{'A headline for the news is required.'} = 'Eine Überschrift für die Neuigkeit muss angegeben werden.';
     $Lang->{'Teaser'} = 'Kurztext';
-    $Lang->{'Teaser is mandatory.'} = '';
-    $Lang->{'Body'} = '';
-    $Lang->{'A news text is required.'} = '';
-    $Lang->{'Display'} = '';
-    $Lang->{'Select a display.'} = '';
+    $Lang->{'Teaser is mandatory.'} = 'Der Kurztext muss angegeben werden.';
+    $Lang->{'Body'} = 'Text';
+    $Lang->{'A news text is required.'} = 'Ein Nachrichtentext muss angegeben werden.';
+    $Lang->{'Display'} = 'Anzeige';
+    $Lang->{'Select a display.'} = 'Wähle eine Anzeige.';
     $Lang->{'Invalidate date'} = 'Nachricht gültig bis';
     $Lang->{'Open news when user visits dashboard'} = 'Nachricht öffnen wenn Agenten das Dashboard öffnen';
-    $Lang->{'Valid'} = '';
-    $Lang->{'Save'} = '';
-    $Lang->{'or'} = '';
-    $Lang->{'Cancel'} = '';
+    $Lang->{'Valid'} = 'Gültig';
+    $Lang->{'Save'} = 'Speichern';
+    $Lang->{'or'} = 'oder';
+    $Lang->{'Cancel'} = 'Abbrechen';
 
     # Kernel/Output/HTML/Templates/Standard/ProductNewsSnippet.tt
     $Lang->{'All News'} = 'Alle Nachrichten';
@@ -81,12 +81,12 @@ sub Data {
 
     # Kernel/Output/HTML/Templates/Standard/AdminProductNewsList.tt
     $Lang->{'Add news'} = 'Neue Nachricht';
-    $Lang->{'List'} = '';
+    $Lang->{'List'} = 'Liste';
     $Lang->{'News ID'} = 'Nachricht';
-    $Lang->{'Date'} = '';
+    $Lang->{'Date'} = 'Datum';
     $Lang->{'Author'} = 'Autor';
-    $Lang->{'Action'} = '';
-    $Lang->{'No matches found.'} = '';
+    $Lang->{'Action'} = 'Aktion';
+    $Lang->{'No matches found.'} = 'Keine Treffer gefunden.';
     $Lang->{'edit'} = 'bearbeiten';
     $Lang->{'delete'} = 'löschen';
 
@@ -94,7 +94,7 @@ sub Data {
     $Lang->{'Mark as read'} = 'Als gelesen markieren';
 
     # Kernel/Output/HTML/Templates/Standard/ProductNewsSnippetLogin.tt
-    $Lang->{'Close this dialog'} = '';
+    $Lang->{'Close this dialog'} = 'Diesen Dialog schließen';
 
     return 1;
 }

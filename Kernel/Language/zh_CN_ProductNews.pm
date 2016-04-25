@@ -34,7 +34,7 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} =
         '服务人员界面的前端模块注册。';
     $Lang->{'Product News'} = '';
-    $Lang->{'Frontend module registration for the invoice states interface.'} = '';
+    $Lang->{'Frontend module registration for the product news administration.'} = '';
     $Lang->{'Create and manage news.'} = '创建和管理消息.';
     $Lang->{'Defines the parameters for the dashboard backend. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} = '';
     $Lang->{'News!'} = '';
@@ -46,7 +46,7 @@ sub Data {
     $Lang->{'Defines the group name to which the user must belong to see edit/delete link if not creator.'} = '';
     $Lang->{'If enabled, everybody can set the message to "invalid" by clicking "mark as read".'} = '';
     $Lang->{'Configurable header for news widgets.'} = '';
-    $Lang->{'Module to product news in sidebar.'} = '';
+    $Lang->{'Module to show product news in sidebar or Ticket zoom.'} = '';
     $Lang->{'Invalidate product news.'} = '';
 
     # Kernel/Modules/AdminProductNews.pm

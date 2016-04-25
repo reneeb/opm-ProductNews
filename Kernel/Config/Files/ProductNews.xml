@@ -77,7 +77,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Module###AdminProductNews" Required="0" Valid="1">
-        <Description Translatable="1">Frontend module registration for the invoice states interface.</Description>
+        <Description Translatable="1">Frontend module registration for the product news administration.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Admin::ModuleRegistration</SubGroup>
         <Setting>
@@ -174,7 +174,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="Frontend::Output::FilterElementPost###OutputFilterProductNews" Required="0" Valid="1">
-        <Description Translatable="1">Module to product news in sidebar.</Description>
+        <Description Translatable="1">Module to show product news in sidebar or Ticket zoom.</Description>
         <Group>ProductNews</Group>
         <SubGroup>OutputFilter</SubGroup>
         <Setting>
