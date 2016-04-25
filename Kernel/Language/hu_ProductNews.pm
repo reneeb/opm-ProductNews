@@ -35,7 +35,8 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} =
         'Előtétprogram-modul regisztráció az ügyintézői felülethez.';
     $Lang->{'Product News'} = 'Termékhírek';
-    $Lang->{'Frontend module registration for the product news administration.'} = 'Előtétprogram-modul regisztráció a számlaállapotok felülethez.';
+    $Lang->{'Own Product News'} = 'Saját termékhírek';
+    $Lang->{'Frontend module registration for the product news administration.'} = 'Előtétprogram-modul regisztráció a termékhírek adminisztrációjához.';
     $Lang->{'Create and manage news.'} = 'Hírek létrehozása és kezelése.';
     $Lang->{'Defines the parameters for the dashboard backend. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} =
         'Meghatározza a vezérlőpult háttérprogram paramétereit. A „Csoport” használható a hozzáférés korlátozásához a bővítményre (például Csoport: admin;csoport1;csoport2;). Az „Alapértelmezett” jelzi, ha a bővítmény alapértelmezetten engedélyezve van, vagy ha a felhasználónak kézzel kell engedélyeznie azt.';
@@ -53,7 +54,8 @@ sub Data {
     $Lang->{'If enabled, everybody can set the message to "invalid" by clicking "mark as read".'} =
         'Ha engedélyezve van, akkor mindenki „érvénytelenre” állíthatja az üzenetet a „megjelölés olvasottként” hivatkozásra kattintva.';
     $Lang->{'Configurable header for news widgets.'} = 'Beállítható fejléc a hírek felületi elemeknél.';
-    $Lang->{'Module to show product news in sidebar or Ticket zoom.'} = 'Egy modul az oldalsávon lévő termékhírekhez.';
+    $Lang->{'Module to show product news in sidebar or Ticket zoom.'} =
+        'Egy modul termékhírek megjelenítéséhez az oldalsávon vagy a jegynagyításon.';
     $Lang->{'Invalidate product news.'} = 'Termékhírek érvénytelenítése.';
 
     # Kernel/Modules/AdminProductNews.pm
@@ -73,7 +75,7 @@ sub Data {
     $Lang->{'A news text is required.'} = 'A hír törzse kötelező.';
     $Lang->{'Display'} = 'Megjelenítő';
     $Lang->{'Select a display.'} = 'Válasszon egy megjelenítőt.';
-    $Lang->{'Invalidate date'} = 'Dátum érvénytelenítése';
+    $Lang->{'Invalidation date'} = 'Érvénytelenítési időpont';
     $Lang->{'Open news when user visits dashboard'} = 'Hírek megnyitása, amikor a felhasználó megnézi a vezérlőpultot';
     $Lang->{'Valid'} = 'Érvényes';
     $Lang->{'Save'} = 'Mentés';

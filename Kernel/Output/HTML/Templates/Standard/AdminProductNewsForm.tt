@@ -99,7 +99,7 @@
                         <div class="Clear"></div>
 
                         <label for="InvalidateUsed">
-                            [% Translate("Invalidate date") | html %]:
+                            [% Translate("Invalidation date") | html %]:
                         </label>
                         <div class="Field">
                             [% Data.InvalidateDate %]
