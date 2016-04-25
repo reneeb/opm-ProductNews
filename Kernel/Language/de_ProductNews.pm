@@ -33,8 +33,8 @@ sub Data {
         'Liste der CSS-Dateien, die immer im Kunden-Interface geladen werden sollen.';
     $Lang->{'Frontend module registration for the agent interface.'} =
         'Frontendmodul-Registration für das Agenten Interface.';
-    $Lang->{'Product News'} = '';
-    $Lang->{'Own Product News'} = '';
+    $Lang->{'Product News'} = 'Produktneuigkeiten';
+    $Lang->{'Own Product News'} = 'Eigene Produktneuigkeiten';
     $Lang->{'Frontend module registration for the product news administration.'} = '';
     $Lang->{'Create and manage news.'} = 'Nachrichten erstellen und verwalten.';
     $Lang->{'Defines the parameters for the dashboard backend. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} = '';
