@@ -64,7 +64,7 @@
 [% RenderBlockStart("NewsContent") %]
 <div id="ProductNewsXExtended_[% Data.NewsID | html %]" class="Hidden">
     <div class="Header">
-        <a class="Close" title="Close this dialog" href="#">
+        <a class="Close" title=[% Translate("Close this dialog") | html %] href="#">
             <i class="fa fa-times"></i>
         </a>
         <h1>[% Translate(Data.Headline, "100") | html %]</h1>

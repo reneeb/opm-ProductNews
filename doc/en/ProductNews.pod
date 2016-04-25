@@ -33,6 +33,10 @@ Never Min, znuny (L<http://znuny.cn>)
 
  * Chinese translation
 
+Balázs Úr, OTRS-megoldások (L<http://www.otrs-megoldasok.hu>)
+
+ * Hungarian translation
+
 =head1 AUTHOR AND LICENSE
 
 Renee Baecker, L<http://perl-services.de>
