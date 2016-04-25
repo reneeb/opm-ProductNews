@@ -67,8 +67,8 @@ sub Data {
     $Lang->{'Actions'} = 'Műveletek';
     $Lang->{'Go to overview'} = 'Ugrás az áttekintőhöz';
     $Lang->{'Add/Change News'} = 'Hírek hozzáadása vagy megváltoztatása';
-    $Lang->{'Headline'} = 'Hírösszefoglaló';
-    $Lang->{'A headline for the news is required.'} = 'A hírösszefoglaló kötelező a hírekhez.';
+    $Lang->{'Headline'} = 'Szalagcím';
+    $Lang->{'A headline for the news is required.'} = 'A szalagcím kötelező a hírekhez.';
     $Lang->{'Teaser'} = 'Bevezető';
     $Lang->{'Teaser is mandatory.'} = 'A bevezető kötelező.';
     $Lang->{'Body'} = 'Törzs';
