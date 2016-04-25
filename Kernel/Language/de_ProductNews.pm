@@ -34,6 +34,7 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} =
         'Frontendmodul-Registration für das Agenten Interface.';
     $Lang->{'Product News'} = '';
+    $Lang->{'Own Product News'} = '';
     $Lang->{'Frontend module registration for the product news administration.'} = '';
     $Lang->{'Create and manage news.'} = 'Nachrichten erstellen und verwalten.';
     $Lang->{'Defines the parameters for the dashboard backend. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} = '';
@@ -66,7 +67,7 @@ sub Data {
     $Lang->{'A news text is required.'} = 'Ein Nachrichtentext muss angegeben werden.';
     $Lang->{'Display'} = 'Anzeige';
     $Lang->{'Select a display.'} = 'Wähle eine Anzeige.';
-    $Lang->{'Invalidate date'} = 'Nachricht gültig bis';
+    $Lang->{'Invalidation date'} = 'Nachricht gültig bis';
     $Lang->{'Open news when user visits dashboard'} = 'Nachricht öffnen wenn Agenten das Dashboard öffnen';
     $Lang->{'Valid'} = 'Gültig';
     $Lang->{'Save'} = 'Speichern';

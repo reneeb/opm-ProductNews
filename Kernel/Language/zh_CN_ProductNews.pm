@@ -34,6 +34,7 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} =
         '服务人员界面的前端模块注册。';
     $Lang->{'Product News'} = '';
+    $Lang->{'Own Product News'} = '';
     $Lang->{'Frontend module registration for the product news administration.'} = '';
     $Lang->{'Create and manage news.'} = '创建和管理消息.';
     $Lang->{'Defines the parameters for the dashboard backend. "Group" is used to restrict access to the plugin (e. g. Group: admin;group1;group2;). "Default" indicates if the plugin is enabled by default or if the user needs to enable it manually.'} = '';
@@ -66,7 +67,7 @@ sub Data {
     $Lang->{'A news text is required.'} = '';
     $Lang->{'Display'} = '';
     $Lang->{'Select a display.'} = '';
-    $Lang->{'Invalidate date'} = '截止日期';
+    $Lang->{'Invalidation date'} = '截止日期';
     $Lang->{'Open news when user visits dashboard'} = '当用户访问信息中心时打开该消息';
     $Lang->{'Valid'} = '有效';
     $Lang->{'Save'} = '保存';
