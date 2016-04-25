@@ -297,11 +297,12 @@ sub _MaskNewsForm {
             'Dashboard' => 'Dashboard',
             map{ $_ => $_ }@Templates,
         },
-        Name       => 'Display',
-        SelectedID => $Param{Display},
-        Class      => 'ValidateRequired ' . ( $Param{DisplayInvalid} || '' ),
-        Multiple   => 1,
-        Size       => 5,
+        Name        => 'Display',
+        SelectedID  => $Param{Display},
+        Class       => 'ValidateRequired Modernize ' . ( $Param{DisplayInvalid} || '' ),
+        Multiple    => 1,
+        Size        => 5,
+        Translation => 0,
     );
 
     my $ValidID = $ValidObject->ValidLookup( Valid => 'valid' );
@@ -311,6 +312,7 @@ sub _MaskNewsForm {
         Name       => 'ValidID',
         Size       => 1,
         SelectedID => $Param{ValidID} || $ValidID,
+        Class      => 'Modernize',
         HTMLQuote  => 1,
     );
 
