@@ -61,7 +61,9 @@ sub Run {
         UserID => $UserID,
     );
 
-    my %UserReadNews = map{ $_ => 1 } split /;/, $Preferences{ProductNewsRead} || '';
+    my %UserReadNews = map{
+        $_ ? ($_ => 1) : ();
+    } split /;/, join ';', $Preferences{ProductNewsRead} || '',  $Preferences{ProductNewsAutoOpenRead} || '';
 
     my $NewsShown = 0;
 
