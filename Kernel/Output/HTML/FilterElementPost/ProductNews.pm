@@ -52,6 +52,10 @@ sub Run {
     my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
     my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
+    if ( $Template =~ m{\A Customer}xms ) {
+        $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+    }
+
     my $UserID      = $LayoutObject->{UserID} || 1;
     my %Preferences = $UserObject->GetPreferences(
         UserID => $UserID,
@@ -129,26 +133,18 @@ sub Run {
 
     return 1 if !$NewsShown;
 
-    if ($Template eq 'CustomerLogin') {
+    if ( $Template eq 'CustomerLogin' || $Template eq 'Login' ) {
+        my $ID = $Template eq 'Login' ? 'LoginBox' : 'SlideArea';
+
         my $Snippet = $LayoutObject->Output(
             TemplateFile => 'ProductNewsSnippetLogin',
         );
         ${ $Param{Data} } =~ s{ 
-            <div \s+ id="SlideArea"> \K 
+            <div \s+ id="$ID"> \K 
         }{ 
             $Snippet 
         }xms;
 
-    }
-    elsif ($Template eq 'Login') {
-        my $Snippet = $LayoutObject->Output(
-            TemplateFile => 'ProductNewsSnippetLogin',
-        );
-        ${ $Param{Data} } =~ s{ 
-            (<div \s+ id="LoginBox">)
-        }{ 
-            $Snippet $1 
-        }xms;
     }
     elsif ($Template =~ /^CustomerTicket/) {
         my $Snippet = $LayoutObject->Output(
@@ -173,30 +169,31 @@ sub Run {
         }xms;
     }
 
-    if ($Template =~ /^Agent/) {
-        my $JS = sprintf q~
-            $('span[id^="mark_as_read_"]').bind( 'click', function() {
-                var link    = $(this);
-                var news_id = link.attr('id').replace('mark_as_read_', '');
+    my $ActionPrefix = $Template =~ m{\A Agent}xms ? 'Agent' : 'Customer';
 
-                $.ajax({
-                    type: "POST",
-                    url:  '%s',
-                    data : {
-                        Action: 'AgentProductNewsMarkRead',
-                        NewsID: news_id
-                    },
-                    success : function() {
-                        link.closest('tr').remove();
-                    }
-                });
+    my $JS = sprintf q~
+        $('span[id^="mark_as_read_"]').bind( 'click', function() {
+            var link    = $(this);
+            var news_id = link.attr('id').replace('mark_as_read_', '');
+
+            $.ajax({
+                type: "POST",
+                url:  '%s',
+                data : {
+                    Action: '%sProductNewsMarkRead',
+                    NewsID: news_id
+                },
+                success : function() {
+                    link.closest('tr').remove();
+                }
             });
-        ~, $LayoutObject->{EnvRef}->{Baselink};
+        });
+    ~, $LayoutObject->{EnvRef}->{Baselink}, $ActionPrefix;
 
 
-        #${ $Param{Data} } =~ s{\z}{[% WRAPPER JSOnDocumentComplete %]\n$JS\n[% END %]};
-        $LayoutObject->AddJSOnDocumentComplete( Code => $JS );
-    }
+    $LayoutObject->AddJSOnDocumentComplete( Code => $JS );
+
+    return 1;
 }
 
 1;

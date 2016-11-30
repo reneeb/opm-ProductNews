@@ -53,7 +53,7 @@
         </Setting>
     </ConfigItem>
     <ConfigItem Name="CustomerFrontend::Module###AgentProductNews" Required="0" Valid="1">
-        <Description Translatable="1">Frontend module registration for the agent interface.</Description>
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
         <Setting>
@@ -68,6 +68,18 @@
         <Description Translatable="1">Frontend module registration for the agent interface.</Description>
         <Group>ProductNews</Group>
         <SubGroup>Frontend::Agent::ModuleRegistration</SubGroup>
+        <Setting>
+            <FrontendModuleReg>
+                <Description Translatable="1">Product News</Description>
+                <NavBarName></NavBarName>
+                <Title Translatable="1">Product News</Title>
+            </FrontendModuleReg>
+        </Setting>
+    </ConfigItem>
+    <ConfigItem Name="CustomerFrontend::Module###CustomerProductNewsMarkRead" Required="0" Valid="1">
+        <Description Translatable="1">Frontend module registration for the customer interface.</Description>
+        <Group>ProductNews</Group>
+        <SubGroup>Frontend::Customer::ModuleRegistration</SubGroup>
         <Setting>
             <FrontendModuleReg>
                 <Description Translatable="1">Product News</Description>

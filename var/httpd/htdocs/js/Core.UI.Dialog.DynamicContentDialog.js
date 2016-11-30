@@ -64,6 +64,10 @@ Core.UI.Dialog = (function (TargetNS) {
             Mode: 'ReadAutoOpen'
         };
 
+        if ( Core.Config.Get('Action').match(/^Customer/) ) {
+            Data.Action = 'CustomerProductNewsMarkRead';
+        }
+
         Core.AJAX.FunctionCall(
             Core.Config.Get('CGIHandle'),
             Data,
