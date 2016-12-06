@@ -34,6 +34,7 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} =
         'Frontendmodul-Registration für das Agenten Interface.';
     $Lang->{'Product News'} = 'Produktneuigkeiten';
+    $Lang->{'Frontend module registration for the customer interface.'} = '';
     $Lang->{'Own Product News'} = 'Eigene Produktneuigkeiten';
     $Lang->{'Frontend module registration for the product news administration.'} = '';
     $Lang->{'Create and manage news.'} = 'Nachrichten erstellen und verwalten.';
@@ -86,13 +87,15 @@ sub Data {
     $Lang->{'News ID'} = 'Nachricht';
     $Lang->{'Date'} = 'Datum';
     $Lang->{'Author'} = 'Autor';
-    $Lang->{'Action'} = 'Aktion';
     $Lang->{'No matches found.'} = 'Keine Treffer gefunden.';
-    $Lang->{'edit'} = 'bearbeiten';
-    $Lang->{'delete'} = 'löschen';
+    $Lang->{'Delete this entry'} = '';
 
     # Kernel/Output/HTML/Templates/Standard/AgentProductNews.tt
     $Lang->{'Mark as read'} = 'Als gelesen markieren';
+
+    # Kernel/Output/HTML/Templates/Standard/DashboardProductNews.tt
+    $Lang->{'edit'} = 'bearbeiten';
+    $Lang->{'delete'} = 'löschen';
 
     # Kernel/Output/HTML/Templates/Standard/ProductNewsSnippetLogin.tt
     $Lang->{'Close this dialog'} = 'Diesen Dialog schließen';

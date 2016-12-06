@@ -35,6 +35,8 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} =
         'Előtétprogram-modul regisztráció az ügyintézői felülethez.';
     $Lang->{'Product News'} = 'Termékhírek';
+    $Lang->{'Frontend module registration for the customer interface.'} =
+        'Előtétprogram-modul regisztráció az ügyfélfelülethez.';
     $Lang->{'Own Product News'} = 'Saját termékhírek';
     $Lang->{'Frontend module registration for the product news administration.'} = 'Előtétprogram-modul regisztráció a termékhírek adminisztrációjához.';
     $Lang->{'Create and manage news.'} = 'Hírek létrehozása és kezelése.';
@@ -94,13 +96,15 @@ sub Data {
     $Lang->{'News ID'} = 'Hírazonosító';
     $Lang->{'Date'} = 'Dátum';
     $Lang->{'Author'} = 'Szerző';
-    $Lang->{'Action'} = 'Művelet';
     $Lang->{'No matches found.'} = 'Nincs találat.';
-    $Lang->{'edit'} = 'szerkesztés';
-    $Lang->{'delete'} = 'törlés';
+    $Lang->{'Delete this entry'} = 'Bejegyzés törlése';
 
     # Kernel/Output/HTML/Templates/Standard/AgentProductNews.tt
     $Lang->{'Mark as read'} = 'Megjelölés olvasottként';
+
+    # Kernel/Output/HTML/Templates/Standard/DashboardProductNews.tt
+    $Lang->{'edit'} = 'szerkesztés';
+    $Lang->{'delete'} = 'törlés';
 
     # Kernel/Output/HTML/Templates/Standard/ProductNewsSnippetLogin.tt
     $Lang->{'Close this dialog'} = 'Párbeszédablak bezárása';

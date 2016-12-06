@@ -96,7 +96,7 @@
             <FrontendModuleReg>
                 <Group>admin</Group>
                 <Description Translatable="1">Create and manage news.</Description>
-                <Title>Product News</Title>
+                <Title Translatable="1">Product News</Title>
                 <NavBarName>Admin</NavBarName>
                 <NavBarModule>
                     <Module>Kernel::Output::HTML::NavBar::ModuleAdmin</Module>

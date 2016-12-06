@@ -17,7 +17,7 @@
             <div class="Content">
                 <ul class="ActionList">
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Add" class="CallForAction"><span>[% Translate("Add news") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Add" class="CallForAction Fullsize Center"><span><i class="fa fa-plus-square"></i>[% Translate("Add news") | html %]</span></a>
                     </li>
                 </ul>
             </div>
@@ -39,7 +39,7 @@
                             <th>[% Translate("Valid") | html %]</th>
                             <th>[% Translate("Date") | html %]</th>
                             <th>[% Translate("Author") | html %]</th>
-                            <th>[% Translate("Action") | html %]</th>
+                            <th>[% Translate("Delete") | html %]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +54,7 @@
                                 [% Data.NewsID | html %]
                             </td>
                             <td>
-                                [% Data.Headline | html %]
+                                <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Edit;NewsID=[% Data.NewsID | uri %]">[% Data.Headline | html %]</a>
                             </td>
                             <td>
                                 [% Data.Teaser | html %]
@@ -68,13 +68,11 @@
                             <td>
                                 [% Data.Author | html %]
                             </td>
-                            <td>
+                            <td class="Center">
 [% RenderBlockStart("EditDelete") %]
-                                <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Edit;NewsID=[% Data.NewsID | uri %]">
-                                [% Translate("edit") | html %]
-                                </a> |
-                                <a href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Delete;NewsID=[% Data.NewsID | uri %]">
-                                [% Translate("delete") | html %]
+                                <a class="TrashCan" href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Delete;NewsID=[% Data.NewsID | uri %];[% Env("ChallengeTokenParam") | html %]" title="[% Translate("Delete this entry") | html %]"><i class="fa fa-trash-o"></i>
+                                    [% Translate("Delete this entry") | html %]
+                                    <i class="fa fa-trash-o"></i>
                                 </a>
 [% RenderBlockEnd("EditDelete") %]
                             </td>

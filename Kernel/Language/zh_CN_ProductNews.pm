@@ -34,6 +34,7 @@ sub Data {
     $Lang->{'Frontend module registration for the agent interface.'} =
         '服务人员界面的前端模块注册。';
     $Lang->{'Product News'} = '';
+    $Lang->{'Frontend module registration for the customer interface.'} = '';
     $Lang->{'Own Product News'} = '';
     $Lang->{'Frontend module registration for the product news administration.'} = '';
     $Lang->{'Create and manage news.'} = '创建和管理消息.';
@@ -86,13 +87,15 @@ sub Data {
     $Lang->{'News ID'} = '消息编号';
     $Lang->{'Date'} = '日期';
     $Lang->{'Author'} = '作者';
-    $Lang->{'Action'} = '操作';
     $Lang->{'No matches found.'} = '没有找到相匹配的.';
-    $Lang->{'edit'} = '编辑';
-    $Lang->{'delete'} = '删除';
+    $Lang->{'Delete this entry'} = '';
 
     # Kernel/Output/HTML/Templates/Standard/AgentProductNews.tt
     $Lang->{'Mark as read'} = '标记为已读';
+
+    # Kernel/Output/HTML/Templates/Standard/DashboardProductNews.tt
+    $Lang->{'edit'} = '编辑';
+    $Lang->{'delete'} = '删除';
 
     # Kernel/Output/HTML/Templates/Standard/ProductNewsSnippetLogin.tt
     $Lang->{'Close this dialog'} = '关闭该对话框';
