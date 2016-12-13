@@ -1,3 +1,5 @@
+=encoding utf-8
+
 =head1 NAME
 
 ProductNews - Show news about the product on the Dashboard
