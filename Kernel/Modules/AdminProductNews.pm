@@ -70,7 +70,7 @@ sub Run {
         && defined $GetParam{InvalidateMinute}
         )
     {
-        %GetParam = $LayoutObject->TransfromDateSelection(
+        %GetParam = $LayoutObject->TransformDateSelection(
             %GetParam,
             Prefix => 'Invalidate',
         );
