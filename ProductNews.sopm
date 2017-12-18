@@ -10,7 +10,7 @@
     <Description Lang="hu">Egy modul, amely saját termékhíreket ad az OTRS-hez.</Description>
     <Framework>6.0.x</Framework>
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/ProductNews.xml" />
+        <File Permission="644" Location="Kernel/Config/Files/XML/ProductNews.xml" />
         <File Permission="644" Location="Kernel/Language/de_ProductNews.pm" />
         <File Permission="644" Location="Kernel/Language/hu_ProductNews.pm" />
         <File Permission="644" Location="Kernel/Language/zh_CN_ProductNews.pm" />
