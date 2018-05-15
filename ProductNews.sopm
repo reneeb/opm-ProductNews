@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <otrs_package version="1.1">
     <Name>ProductNews</Name>
-    <Version>6.0.1</Version>
+    <Version>6.0.2</Version>
     <Vendor>Perl-Services.de</Vendor>
     <URL>http://perl-services.de/</URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
@@ -31,6 +31,7 @@
         <File Permission="644" Location="doc/en/ProductNews.pod" />
         <File Permission="644" Location="doc/hu/ProductNews.pod" />
         <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js"/>
+        <File Permission="644" Location="var/httpd/htdocs/js/PS.ProductNewsLogin.js"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.ProductNewsX.css"/>
         <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.ProductNewsX.css"/>
     </Filelist>
