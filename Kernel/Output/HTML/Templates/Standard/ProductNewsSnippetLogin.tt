@@ -20,47 +20,9 @@
 [% RenderBlockStart("News") %]
         <tr >
             <td>
-                <a href="#" class="clickProductNewsX_[% Data.NewsID | html %]" title="[% Translate(Data.Teaser) | html %]" >
+                <a href="#Test" class="clickProductNewsX" data-id="[% Data.NewsID | html %]" title="[% Translate(Data.Teaser) | html %]" >
                 [% Translate(Data.Headline, "100") | html %]
                 </a>
-            </td>
-[% WRAPPER JSOnDocumentComplete %]
-<script type="text/javascript">//<![CDATA[
-    
-    $('.clickProductNewsX_[% Data.NewsID | html %]').bind('click',function() {
-        $('<div id="PNXOverlay" tabindex="-1"><div role="dialog" class="PNXDialog Modal"></div></div>').appendTo('body');
-        $('.PNXDialog').append($('#ProductNewsXExtended_[% Data.NewsID | html %]').html());
-        $('body').css({'overflow': 'hidden'});
-        $('#PNXOverlay').height($(document).height()).css('top', 0);
-
-        $('.Close').bind('click',function() {
-            $('#PNXOverlay').remove();
-            $('body').css({
-                'overflow': 'auto'
-            });
-            $('body').css('min-height', 'auto');        
-            return false;    
-        });
-
-        return false;    
-    });
-    
-//]]></script>
-[% END %]
-[% RenderBlockStart("Teaser") %]
-            <td>
-                <a href="#" class="clickProductNewsX_[% Data.NewsID | html %]">
-                [% Data.Teaser %]
-                </a>
-            </td>
-[% RenderBlockEnd("Teaser") %]
-[% RenderBlockStart("CreateByInformation") %]
-            <td>
-                [% Translate("created by") | html %]: [% Data.UserLastname %] [% Data.UserFirstname %] ([% Data.UserLogin %])
-            </td>
-[% RenderBlockEnd("CreateByInformation") %]
-        </tr>
-
 [% RenderBlockStart("NewsContent") %]
 <div id="ProductNewsXExtended_[% Data.NewsID | html %]" class="Hidden">
     <div class="Header">
@@ -92,6 +54,21 @@
     </div>
 </div>
 [% RenderBlockEnd("NewsContent") %]
+            </td>
+[% RenderBlockStart("Teaser") %]
+            <td>
+                <a href="#Test" class="clickProductNewsX" data-id="[% Data.NewsID | html %]">
+                [% Data.Teaser %]
+                </a>
+            </td>
+[% RenderBlockEnd("Teaser") %]
+[% RenderBlockStart("CreateByInformation") %]
+            <td>
+                [% Translate("created by") | html %]: [% Data.UserLastname %] [% Data.UserFirstname %] ([% Data.UserLogin %])
+            </td>
+[% RenderBlockEnd("CreateByInformation") %]
+
+      </tr>
 
 [% RenderBlockEnd("News") %]
    </tbody>

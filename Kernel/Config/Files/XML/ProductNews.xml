@@ -6,6 +6,7 @@
         <Value>
             <Array>
                 <Item>Core.UI.Dialog.DynamicContentDialog.js</Item>
+                <Item>PS.ProductNewsLogin.js</Item>
             </Array>
         </Value>
     </Setting>
@@ -15,6 +16,7 @@
         <Value>
             <Array>
                 <Item>Core.UI.Dialog.DynamicContentDialog.js</Item>
+                <Item>PS.ProductNewsLogin.js</Item>
             </Array>
         </Value>
     </Setting>

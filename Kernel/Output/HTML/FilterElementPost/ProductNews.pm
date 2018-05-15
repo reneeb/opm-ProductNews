@@ -48,16 +48,19 @@ sub Run {
 
     return 1 if !%ProductNews;
 
-    my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
-    my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
-    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
+    my $LayoutObject       = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
+    my $UserObject         = $Kernel::OM->Get('Kernel::System::User');
+    my $ConfigObject       = $Kernel::OM->Get('Kernel::Config');
+    my $CustomerUserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+
+    my $ProxyUser = $UserObject;
 
     if ( $Template =~ m{\A Customer}xms ) {
-        $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
+        $ProxyUser = $CustomerUserObject;
     }
 
     my $UserID      = $LayoutObject->{UserID} || 1;
-    my %Preferences = $UserObject->GetPreferences(
+    my %Preferences = $ProxyUser->GetPreferences(
         UserID => $UserID,
     );
 
@@ -172,28 +175,13 @@ sub Run {
     }
 
     my $ActionPrefix = $Template =~ m{\A Agent}xms ? 'Agent' : 'Customer';
+    my $JSSnippet = qq~
+        <script type="text/javascript">//<![CDATA[
+            var ActionPrefix = '$ActionPrefix';
+        //]]></script>
+    ~;
 
-    my $JS = sprintf q~
-        $('span[id^="mark_as_read_"]').bind( 'click', function() {
-            var link    = $(this);
-            var news_id = link.attr('id').replace('mark_as_read_', '');
-
-            $.ajax({
-                type: "POST",
-                url:  '%s',
-                data : {
-                    Action: '%sProductNewsMarkRead',
-                    NewsID: news_id
-                },
-                success : function() {
-                    link.closest('tr').remove();
-                }
-            });
-        });
-    ~, $LayoutObject->{EnvRef}->{Baselink}, $ActionPrefix;
-
-
-    $LayoutObject->AddJSOnDocumentComplete( Code => $JS );
+    ${ $Param{Data} } =~ s{<div \s+ id="(?:ProductNewsX|ALLNEWS)" [^>]* > \K}{$JSSnippet}xism;
 
     return 1;
 }
