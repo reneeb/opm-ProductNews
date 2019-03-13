@@ -17,10 +17,7 @@
             <div class="Content">
                 <ul class="ActionList">
                     <li>
-                        <a href="[% Env("Baselink") %]Action=[% Env("Action") %];Subaction=Add" class="CallForAction Fullsize Center"><span><i class="fa fa-plus-square"></i>[% Translate("Add news") | html %]</span></a>
-                    </li>
-                    <li>
-                        <a href="[% Env("Baselink") %]Action=AdminProductNewsSorting" class="CallForAction Fullsize Center"><span>[% Translate("Sort news") | html %]</span></a>
+                        <a href="[% Env("Baselink") %]Action=AdminProductNews" class="CallForAction Fullsize Center"><span>[% Translate("Go to overview") | html %]</span></a>
                     </li>
                 </ul>
             </div>
@@ -33,16 +30,17 @@
                 <h2>[% Translate("List") | html %]</h2>
             </div>
             <div class="Content">
+                <form action="[% Env("Baselink") | html %]" method="post">
+                <input type="hidden" name="Action" value="[% Env("Action") | html %]" /> 
+                <input type="hidden" name="Subaction" value="Save" />
+
                 <table class="DataTable" id="News">
                     <thead>
                         <tr>
                             <th>[% Translate("News ID") | html %]</th>
                             <th>[% Translate("Headline") | html %]</th>
                             <th>[% Translate("Teaser") | html %]</th>
-                            <th>[% Translate("Valid") | html %]</th>
-                            <th>[% Translate("Date") | html %]</th>
-                            <th>[% Translate("Author") | html %]</th>
-                            <th>[% Translate("Delete") | html %]</th>
+                            <th>[% Translate("Position") | html %]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,26 +61,21 @@
                                 [% Data.Teaser | html %]
                             </td>
                             <td>
-                                [% Translate(Data.Valid) | html %]
-                            </td>
-                            <td>
-                                [% Data.CreateTime | html %]
-                            </td>
-                            <td>
-                                [% Data.Author | html %]
-                            </td>
-                            <td class="Center">
-[% RenderBlockStart("EditDelete") %]
-                                <a class="TrashCan" href="[% Env("Baselink") %]Action=AdminProductNews;Subaction=Delete;NewsID=[% Data.NewsID | uri %];[% Env("ChallengeTokenParam") | html %]" title="[% Translate("Delete this entry") | html %]"><i class="fa fa-trash-o"></i>
-                                    [% Translate("Delete this entry") | html %]
-                                    <i class="fa fa-trash-o"></i>
-                                </a>
-[% RenderBlockEnd("EditDelete") %]
+                                <input type="text" name="Position-[% Data.NewsID | html %]" value="[% Data.Position | html %]">
                             </td>
                         </tr>
 [% RenderBlockEnd("NewsRow") %]
                     </tbody>
                 </table>
+
+                       <div class="Field">
+                            <button class="Primary CallForAction" type="submit" value="[% Translate("Save") | html %]"><span>[% Translate("Save") | html %]</span></button>
+                            [% Translate("or") | html %]
+                            <a href="[% Env("Baselink") %]Action=[% Env("Action") %]">[% Translate("Cancel") | html %]</a>
+                        </div>
+                        <div class="Clear"></div>
+
+                </form>
             </div>
         </div>
     </div>

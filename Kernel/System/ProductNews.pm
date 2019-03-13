@@ -84,13 +84,14 @@ sub NewsAdd {
     $Param{ValidID}          ||= 0;
     $Param{InvalidateEpoche} ||= 0;
     $Param{OpenNews}         ||= 0;
+    $Param{Position}         ||= 0;
 
     # insert new news
     return if !$DBObject->Do(
         SQL => 'INSERT INTO product_news '
             . '(headline, teaser, body, create_time, create_by, valid_id, '
-            . ' change_time, change_by, displays, invalidate_epoche, open_news) '
-            . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?, ?, ?, ?)',
+            . ' change_time, change_by, displays, invalidate_epoche, open_news, position) '
+            . 'VALUES (?, ?, ?, current_timestamp, ?, ?, current_timestamp, ?, ?, ?, ?, ?)',
         Bind => [
             \$Param{Headline},
             \$Param{Teaser},
@@ -101,6 +102,7 @@ sub NewsAdd {
             \$Param{Displays},
             \$Param{InvalidateEpoche},
             \$Param{OpenNews},
+            \$Param{Position},
         ],
     );
 
@@ -225,7 +227,7 @@ sub NewsGet {
     # sql
     return if !$DBObject->Prepare(
         SQL => 'SELECT id, headline, teaser, body, create_time, create_by, '
-            . '     valid_id, displays, invalidate_epoche, open_news '
+            . '     valid_id, displays, invalidate_epoche, open_news, position '
             . 'FROM product_news WHERE id = ?',
         Bind  => [ \$Param{NewsID} ],
         Limit => 1,
@@ -244,6 +246,7 @@ sub NewsGet {
             Displays         => $Data[7],
             InvalidateEpoche => $Data[8],
             OpenNews         => $Data[9],
+            Position         => $Data[10],
         );
     }
 
@@ -284,24 +287,67 @@ sub NewsDelete {
     );
 }
 
+=item NewsPositionSet()
+
+to update news 
+
+    my $Success = $NewsObject->NewsUpdate(
+        NewsID   => 3,
+        Position => 1,
+        UserID   => 123,
+    );
+
+=cut
+
+sub NewsPositionSet {
+    my ( $Self, %Param ) = @_;
+
+    my $LogObject = $Kernel::OM->Get('Kernel::System::Log');
+    my $DBObject  = $Kernel::OM->Get('Kernel::System::DB');
+
+    # check needed stuff
+    for my $Needed (qw(NewsID Position UserID)) {
+        if ( !$Param{$Needed} ) {
+            $LogObject->Log(
+                Priority => 'error',
+                Message  => "Need $Needed!",
+            );
+            return;
+        }
+    }
+
+    # insert new news
+    return if !$DBObject->Do(
+        SQL => 'UPDATE product_news SET position = ?, '
+            . 'change_time = current_timestamp, change_by = ? '
+            . 'WHERE id = ?',
+        Bind => [
+            \$Param{Position},
+            \$Param{UserID},
+            \$Param{NewsID},
+        ],
+    );
+
+    return 1;
+}
 
 =item NewsList()
 
 returns a hash of all news
 
-    my %Newss = $NewsObject->NewsList();
+    my %News = $NewsObject->NewsList();
 
 returns a hash of all valid news
 
-    my %Newss = $NewsObject->NewsList( Valid => 1 );
+    my %News = $NewsObject->NewsList( Valid => 1 );
 
 returns a hash of all news for a specific display
 
-    my %Newss = $NewsObject->NewsList( Display => 'AgentTicketEmail' );
+    my %News = $NewsObject->NewsList( Display => 'AgentTicketEmail' );
 
 the result looks like
 
-    %Newss = (
+    %News = (
         '1' => 'News 1',
         '2' => 'Test News',
     );
@@ -318,6 +364,8 @@ sub NewsList {
     my $Where = '';
     my @Bind;
 
+    $Param{Return} ||= 'List';
+
     if ( $Param{Valid} ) {
         my $ValidID = $ValidObject->ValidLookup( Valid => 'valid' );
         $Where = 'WHERE valid_id = ?';
@@ -326,11 +374,12 @@ sub NewsList {
 
     # sql
     return if !$DBObject->Prepare(
-        SQL  => "SELECT id, teaser, displays FROM product_news $Where ORDER BY create_time DESC",
+        SQL  => "SELECT id, teaser, displays FROM product_news $Where ORDER BY position ASC, create_time DESC",
         Bind => \@Bind,
     );
 
     my %News;
+    my @IDs;
 
     DATA:
     while ( my @Data = $DBObject->FetchrowArray() ) {
@@ -340,8 +389,13 @@ sub NewsList {
         }
 
         $News{ $Data[0] } = $Data[1];
+
+        push @IDs, $Data[0];
     }
 
+    if ( $Param{Return} eq 'Sorted' ) {
+        return @IDs;
+    }
     return %News;
 }
 

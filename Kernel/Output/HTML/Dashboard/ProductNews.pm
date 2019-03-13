@@ -75,9 +75,10 @@ sub Run {
     }
 
     # get news
-    my %ProductNews = $NewsObject->NewsList(
+    my @ProductNews = $NewsObject->NewsList(
         Valid   => 1,
         Display => 'Dashboard',
+        Return  => 'Sorted',
     );
 
     my $OpenNewsID;
@@ -89,7 +90,7 @@ sub Run {
     my %UserReadNews = map{ $_ => 1 } split /;/, $UserPrefs{'ProductNewsAutoOpenRead'} || '';
 
     # show messages
-    for my $NewsID ( sort{ $b <=> $a }keys %ProductNews ) {
+    for my $NewsID ( @ProductNews ) {
 
         # get news data
         my %NewsInfo = $NewsObject->NewsGet(
