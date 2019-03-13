@@ -1,6 +1,5 @@
 # --
-# Kernel/Output/HTML/FilterElementPost/ProductNews.pm
-# Copyright (C) 2016 Perl-Services.de, http://www.perl-services.de/
+# Copyright (C) 2016 - 2019 Perl-Services.de, http://www.perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
@@ -160,7 +159,7 @@ sub Run {
         $Snippet =~ s{(<div \s+ class="WidgetSimple")(>)}{$1$CustomerLoginStyle$2}xism;
         $Snippet =~ s{<div \s+ class="WidgetAction \s+ Toggle">.*?</div>}{}xism;
         $Snippet =~ s{<span \s+ id="mark_as_read_.*?</span>}{}gxism;
-        my $MatchString = '(<div.*?class=.*?TicketView)';
+        my $MatchString = '(<div.*?id="MainBox")';
         ${ $Param{Data} } =~ s{ $MatchString }{ $Snippet $1}xism;
     }
     else {
