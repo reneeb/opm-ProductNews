@@ -36,6 +36,7 @@ sub Run {
     my $LayoutObject = $Kernel::OM->Get('Kernel::Output::HTML::Layout');
     my $NewsObject   = $Kernel::OM->Get('Kernel::System::ProductNews');
     my $UtilsObject  = $Kernel::OM->Get('Kernel::System::HTMLUtils');
+    my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 
     my @Params = (qw(NewsID ID Mode));
 
@@ -46,7 +47,9 @@ sub Run {
 
     my %News = $NewsObject->NewsGet( NewsID => $GetParam{ID} || $GetParam{NewsID});
 
-    $News{Body} = $UtilsObject->ToHTML( String => $News{Body} );
+    if ( !$ConfigObject->Get('ProductNews::UseRichText') ) {
+        $News{Body} = $UtilsObject->ToHTML( String => $News{Body} );
+    }
 
     my %Opts;
     my $NavigationBar = $LayoutObject->NavigationBar();
@@ -57,7 +60,7 @@ sub Run {
         # for very short news, the dialog will show garbage, so
         # we have to extend the content...
         my $Whitespaces = 0; 
-        while ( length $News{Body} < 120 ) {
+        while ( length $News{Body} < 420 ) {
             $News{Body} .= ' ';
             $Whitespaces++;
         }

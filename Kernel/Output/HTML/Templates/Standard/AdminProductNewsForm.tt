@@ -72,8 +72,11 @@
                             <span class="Marker">*</span>
                             [% Translate("Body") | html %]:
                         </label>
-                        <div class="Field">
-                            <textarea id="Body" name="Body" class="W75pc Validate_Required [% Data.BodyInvalid | html %]">[% Data.Body | html %]</textarea>
+                        <div id="RichTextField" class="RichTextField">
+                            <textarea id="RichText" name="Body"
+                                      class="[% IF Config("ProductNews::UseRichText") %]RichText[% END %] W75pc Validate_Required [% Data.BodyInvalid | html %]"
+                                      rows="15" cols="[% Config("Ticket::Frontend::TextAreaNote") | html %]"
+                                      >[% Data.Body | html %]</textarea>
                             <div id="BodyError" class="TooltipErrorMessage">
                                 <p>[% Translate("A news text is required.") | html %]</p>
                             </div>

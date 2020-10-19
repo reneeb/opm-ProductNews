@@ -92,7 +92,9 @@ sub Run {
         );
       
         # for using without JS-Dialog
-        $News{Body} = $LayoutObject->Ascii2Html(Text => $News{Body},HTMLResultMode  => 1,);
+        if ( !$ConfigObject->Get('ProductNews::UseRichText') ) {
+            $News{Body} = $LayoutObject->Ascii2Html(Text => $News{Body},HTMLResultMode  => 1,);
+        }
         
         $LayoutObject->Block(
             Name => 'News',
