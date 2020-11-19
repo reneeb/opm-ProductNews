@@ -410,7 +410,8 @@ sub InvalidateNews {
     my $SQL = 'UPDATE product_news '
         . ' SET valid_id = 2 '
         . ' WHERE invalidate_epoche IS NOT NULL '
-        . '    AND invalidate_epoche < ?';
+        . '    AND invalidate_epoche < ?'
+        . '    AND invalidate_epoche != 0';
 
     return $DBObject->Do(
         SQL  => $SQL,
