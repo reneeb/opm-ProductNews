@@ -58,14 +58,19 @@ sub Run {
         $ProxyUser = $CustomerUserObject;
     }
 
-    my $UserID      = $LayoutObject->{UserID} || 1;
-    my %Preferences = $ProxyUser->GetPreferences(
-        UserID => $UserID,
-    );
+    my $UserID      = $LayoutObject->{UserID};
 
-    my %UserReadNews = map{
-        $_ ? ($_ => 1) : ();
-    } split /;/, join ';', $Preferences{ProductNewsRead} || '',  $Preferences{ProductNewsAutoOpenRead} || '';
+    my %UserReadNews;
+
+    if ( $UserID ) {
+        my %Preferences = $ProxyUser->GetPreferences(
+            UserID => $UserID,
+        );
+
+        %UserReadNews = map{
+            $_ ? ($_ => 1) : ();
+        } split /;/, join ';', $Preferences{ProductNewsRead} || '',  $Preferences{ProductNewsAutoOpenRead} || '';
+    }
 
     my $NewsShown = 0;
 
