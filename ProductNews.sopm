@@ -1,84 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
-<otrs_package version="1.1">
+<?xml version="1.0" encoding="utf-8" ?>
+<otrs_package version="1.0">
+    <!-- GENERATED WITH OPM::Maker::Command::sopm (1.1.0) -->
     <Name>ProductNews</Name>
     <Version>6.0.6</Version>
-    <Vendor>Perl-Services.de</Vendor>
-    <URL>http://perl-services.de/</URL>
-    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
-    <Description Lang="en">A module that adds own product news to OTRS.</Description>
-    <Description Lang="de">Ein Modul, mit dem eigene Produktneuigkeiten in OTRS gepflegt werden können.</Description>
-    <Description Lang="hu">Egy modul, amely saját termékhíreket ad az OTRS-hez.</Description>
     <Framework>6.0.x</Framework>
+    <Framework>6.1.x</Framework>
+    <Framework>6.2.x</Framework>
+    <Framework>6.3.x</Framework>
+    <Vendor>Perl-Services.de</Vendor>
+    <URL>https://www.perl-services.de</URL>
+    <Description Lang="de">Ein Modul, mit dem eigene Produktneuigkeiten im Ticketsystem gepflegt werden können.</Description>
+    <Description Lang="en">A module that adds own product news to the ticket system</Description>
+    <Description Lang="hu">Egy modul, amely saját termékhíreket ad az OTRS-hez.</Description>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
     <Filelist>
-        <File Permission="644" Location="Kernel/Config/Files/XML/ProductNews.xml"/>
-        <File Permission="644" Location="Kernel/Language/de_ProductNews.pm"/>
-        <File Permission="644" Location="Kernel/Language/hu_ProductNews.pm"/>
-        <File Permission="644" Location="Kernel/Language/zh_CN_ProductNews.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminProductNews.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AdminProductNewsSorting.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentProductNewsMarkRead.pm"/>
-        <File Permission="644" Location="Kernel/Modules/AgentProductNews.pm"/>
-        <File Permission="644" Location="Kernel/Modules/CustomerProductNewsMarkRead.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Dashboard/ProductNews.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/ProductNews.pm"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminProductNewsForm.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminProductNewsList.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminProductNewsSorting.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentProductNews.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/DashboardProductNews.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ProductNewsSnippet.tt"/>
-        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ProductNewsSnippetLogin.tt"/>
-        <File Permission="644" Location="Kernel/System/ProductNews.pm"/>
-        <File Permission="644" Location="Kernel/System/Console/Command/Maint/ProductNews/Invalidate.pm"/>
-        <File Permission="644" Location="doc/en/ProductNews.pod"/>
-        <File Permission="644" Location="doc/hu/ProductNews.pod"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/js/PS.ProductNewsLogin.js"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.ProductNewsX.css"/>
-        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.ProductNewsX.css"/>
+        <File Permission="644" Location="Kernel/Config/Files/XML/ProductNews.xml" />
+        <File Permission="644" Location="Kernel/Language/de_ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Language/hu_ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Language/zh_CN_ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Modules/AdminProductNews.pm" />
+        <File Permission="644" Location="Kernel/Modules/AdminProductNewsSorting.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentProductNews.pm" />
+        <File Permission="644" Location="Kernel/Modules/AgentProductNewsMarkRead.pm" />
+        <File Permission="644" Location="Kernel/Modules/CustomerProductNewsMarkRead.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Dashboard/ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/FilterElementPost/ProductNews.pm" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminProductNewsForm.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminProductNewsList.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AdminProductNewsSorting.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/AgentProductNews.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/DashboardProductNews.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ProductNewsSnippet.tt" />
+        <File Permission="644" Location="Kernel/Output/HTML/Templates/Standard/ProductNewsSnippetLogin.tt" />
+        <File Permission="644" Location="Kernel/System/Console/Command/Maint/ProductNews/Invalidate.pm" />
+        <File Permission="644" Location="Kernel/System/ProductNews.pm" />
+        <File Permission="644" Location="doc/en/ProductNews.pod" />
+        <File Permission="644" Location="doc/hu/ProductNews.pod" />
+        <File Permission="644" Location="var/httpd/htdocs/js/Core.UI.Dialog.DynamicContentDialog.js" />
+        <File Permission="644" Location="var/httpd/htdocs/js/PS.ProductNewsLogin.js" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Agent/default/css/Core.ProductNewsX.css" />
+        <File Permission="644" Location="var/httpd/htdocs/skins/Customer/default/css/Core.ProductNewsX.css" />
     </Filelist>
     <DatabaseInstall Type="post">
         <TableCreate Name="product_news">
-            <Column AutoIncrement="true" Name="id" PrimaryKey="true" Required="true" Type="INTEGER"/>
-            <Column Name="headline" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="teaser" Required="true" Size="250" Type="VARCHAR"/>
-            <Column Name="body" Required="true" Size="3000" Type="VARCHAR"/>
-            <Column Name="displays" Required="false" Size="3000" Type="VARCHAR"/>
-            <Column Name="invalidate_epoche" Required="false" Type="INTEGER"/>
-            <Column Name="open_news" Required="false" Type="SMALLINT"/>
-            <Column Name="position" Required="false" Type="SMALLINT"/>
-            <Column Name="valid_id" Required="true" Type="SMALLINT"/>
-            <Column Name="create_time" Required="true" Type="DATE"/>
-            <Column Name="create_by" Required="true" Type="INTEGER"/>
-            <Column Name="change_time" Required="true" Type="DATE"/>
-            <Column Name="change_by" Required="true" Type="INTEGER"/>
+            <Column Name="id" Required="true" Type="INTEGER" AutoIncrement="true" PrimaryKey="true" />
+            <Column Name="headline" Required="true" Type="VARCHAR" Size="250" />
+            <Column Name="teaser" Required="true" Type="VARCHAR" Size="250" />
+            <Column Name="body" Required="true" Type="VARCHAR" Size="3000" />
+            <Column Name="displays" Required="false" Type="VARCHAR" Size="3000" />
+            <Column Name="invalidate_epoche" Required="false" Type="INTEGER" />
+            <Column Name="open_news" Required="false" Type="SMALLINT" />
+            <Column Name="position" Required="false" Type="SMALLINT" />
+            <Column Name="valid_id" Required="false" Type="SMALLINT" />
+            <Column Name="create_time" Required="true" Type="DATE" />
+            <Column Name="create_by" Required="true" Type="INTEGER" />
+            <Column Name="change_time" Required="true" Type="DATE" />
+            <Column Name="change_by" Required="true" Type="INTEGER" />
             <ForeignKey ForeignTable="users">
-                <Reference Foreign="id" Local="create_by">
-                </Reference>
-                <Reference Foreign="id" Local="change_by">
-                </Reference>
+                <Reference Local="create_by" Foreign="id" />
+                <Reference Local="change_by" Foreign="id" />
             </ForeignKey>
             <ForeignKey ForeignTable="valid">
-                <Reference Foreign="id" Local="valid_id">
-                </Reference>
+                <Reference Local="valid_id" Foreign="id" />
             </ForeignKey>
         </TableCreate>
     </DatabaseInstall>
     <DatabaseUpgrade Type="post">
         <TableAlter Name="product_news" Version="4.0.2">
-            <ColumnAdd Name="displays" Required="false" Size="3000" Type="VARCHAR"/>
+            <ColumnAdd Name="displays" Required="false" Type="VARCHAR" Size="3000" />
         </TableAlter>
         <TableAlter Name="product_news" Version="4.0.5">
-            <ColumnAdd Name="invalidate_epoche" Required="false" Type="INTEGER"/>
+            <ColumnAdd Name="invalidate_epoche" Required="false" Type="INTEGER" />
         </TableAlter>
         <TableAlter Name="product_news" Version="4.0.6">
-            <ColumnAdd Name="open_news" Required="false" Type="SMALLINT"/>
+            <ColumnAdd Name="open_news" Required="false" Type="SMALLINT" />
         </TableAlter>
         <TableAlter Name="product_news" Version="6.0.3">
-            <ColumnAdd Name="position" Required="false" Type="SMALLINT"/>
+            <ColumnAdd Name="position" Required="false" Type="SMALLINT" />
         </TableAlter>
     </DatabaseUpgrade>
-    <DatabaseUninstall Type="post">
-        <TableDrop Name="product_news"/>
+    <DatabaseUninstall Type="pre">
+        <TableDrop Name="product_news" />
     </DatabaseUninstall>
 </otrs_package>

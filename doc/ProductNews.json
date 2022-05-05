@@ -1,0 +1,92 @@
+{
+    "name": "ProductNews",
+    "version": "6.0.6",
+    "framework": [
+        "6.0.x",
+        "6.1.x",
+        "6.2.x",
+        "6.3.x"
+    ],
+    "vendor": {
+        "name":  "Perl-Services.de",
+        "url": "https://www.perl-services.de"
+    },
+    "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007",
+    "description" : {
+        "en": "A module that adds own product news to the ticket system",
+        "de": "Ein Modul, mit dem eigene Produktneuigkeiten im Ticketsystem gepflegt werden können.",
+        "hu": "Egy modul, amely saját termékhíreket ad az OTRS-hez."
+    },
+    "database" : [
+        {
+            "type": "TableCreate",
+            "version": 0,
+            "name": "product_news",
+            "columns": [
+                { "name": "id", "required": "true", "auto_increment": "true", "type": "INTEGER", "primary_key": "true" },
+                { "name": "headline", "required": "true", "type": "VARCHAR", "size": 250 },
+                { "name": "teaser", "required": "true", "type": "VARCHAR", "size": 250 },
+                { "name": "body", "required": "true", "type": "VARCHAR", "size": 3000 },
+                { "name": "displays", "required": "false", "type": "VARCHAR", "size": 3000 },
+                { "name": "invalidate_epoche", "required": "false", "type": "INTEGER" },
+                { "name": "open_news", "required": "false", "type": "SMALLINT" },
+                { "name": "position", "required": "false", "type": "SMALLINT" },
+                { "name": "valid_id", "required": "false", "type": "SMALLINT" },
+                { "name": "create_time", "required": "true", "type": "DATE" },
+                { "name": "create_by", "required": "true", "type": "INTEGER" },
+                { "name": "change_time", "required": "true", "type": "DATE" },
+                { "name": "change_by", "required": "true", "type": "INTEGER" }
+            ],
+            "keys" : [
+                {
+                    "name": "users",
+                    "references": [
+                        { "local": "create_by", "foreign": "id" },
+                        { "local": "change_by", "foreign": "id" }
+                    ]
+                },
+                {
+                    "name": "valid",
+                    "references": [
+                        { "local": "valid_id", "foreign": "id" }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "ColumnAdd",
+            "name": "product_news",
+            "version" : "4.0.2",
+            "columns":[
+                { "name": "displays", "required": "false", "type": "VARCHAR", "size": 3000 }
+            ]
+        },
+        {
+            "type": "ColumnAdd",
+            "name": "product_news",
+            "version" : "4.0.5",
+            "columns":[
+                { "name": "invalidate_epoche", "required": "false", "type": "INTEGER" }
+            ]
+        },
+        {
+            "type": "ColumnAdd",
+            "name": "product_news",
+            "version" : "4.0.6",
+            "columns":[
+                { "name": "open_news", "required": "false", "type": "SMALLINT" }
+            ]
+        },
+        {
+            "type": "ColumnAdd",
+            "name": "product_news",
+            "version" : "6.0.3",
+            "columns":[
+                { "name": "position", "required": "false", "type": "SMALLINT" }
+            ]
+        }
+    ],
+    "exclude_files" : [
+        "doc/ProductNews.json"
+    ]
+}
