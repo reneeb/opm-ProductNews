@@ -1,6 +1,5 @@
 # --
-# Kernel/Language/hu_ProductNews.pm - the Hungarian translation of ProductNews
-# Copyright (C) 2011-2014 Perl-Services.de, http://perl-services.de/
+# Copyright (C) 2011-2022 Perl-Services.de, https://perl-services.de/
 # Copyright (C) 2016 Balázs Úr, http://www.otrs-megoldasok.hu/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see

@@ -1,6 +1,5 @@
 # --
-# Kernel/Language/de_ProductNews.pm - the German translation of ProductNews
-# Copyright (C) 2011-2016 Perl-Services.de, http://perl-services.de/
+# Copyright (C) 2011-2022 Perl-Services.de, https://perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you

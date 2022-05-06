@@ -1,6 +1,5 @@
 # --
-# Kernel/System/ProductNews.pm - All News related functions should be here eventually
-# Copyright (C) 2011-2015 Perl-Services.de, http://perl-services.de/
+# Copyright (C) 2011-2022 Perl-Services.de, https://perl-services.de/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (AGPL). If you
