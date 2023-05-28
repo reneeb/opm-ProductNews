@@ -58,7 +58,7 @@ sub Run {
         $ProxyUser = $CustomerUserObject;
     }
 
-    my $UserID      = $LayoutObject->{UserID};
+    my $UserID = $LayoutObject->{UserID};
 
     my %UserReadNews;
 
@@ -151,7 +151,7 @@ sub Run {
             TemplateFile => 'ProductNewsSnippetLogin',
         );
         ${ $Param{Data} } =~ s{ 
-            <div \s+ id="$ID"> \K 
+            <div [^>]*? id="$ID" [^>]*? > \K 
         }{ 
             $Snippet 
         }xms;
